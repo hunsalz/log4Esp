@@ -1,0 +1,22 @@
+{
+  "name":"log4arduino",
+  "description":"Logger 4 Arduino",
+  "keywords":"Arduino,ESP8266,logger",
+  "authors":
+  {
+    "name": "Markus Hunsalz",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/hunsalz/log4arduino.git"
+  },
+  "version": "0.0.1",
+  "license": "Apache License",
+  "frameworks": "arduino",
+  "platforms":"espressif",
+  "examples": [
+    "examples/*/*.ino"
+  ]
+}
