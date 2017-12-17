@@ -17,13 +17,20 @@ void setup() {
   String str = "String";
   char ch = 'x';
 
-  Serial.println("DEFAULT =============================================");
-  Logger::getInstance().notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  Serial.println("==== CASE 1 =====");
+  log4arduino::LOG.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+
+  Serial.println("==== CASE 2 =====");
+  Logger logger = Logger("MyLogger");
+  logger.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+
+  Serial.println("==== CASE 3 =====");
+  logger.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
 
   Appender appender = Appender(&Serial);
   appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
     
-    output.print(F("["));
+    output.print(F("[TIME]["));
     output.print(Appender::toString(level));
     output.print(F("] "));
     size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
@@ -32,10 +39,10 @@ void setup() {
     output.print(buffer);
     output.println();
   });
-  Logger::getInstance().setAppender(appender);
+  log4arduino::LOG.add(appender);
   
-  Serial.println("MY FORMATTER =============================================");
-  Logger::getInstance().notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  Serial.println("==== CASE 4 =====");
+  log4arduino::LOG.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
 }
 
 void loop() {
