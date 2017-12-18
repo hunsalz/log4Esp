@@ -78,13 +78,36 @@ void callMyLoggerWithAppender() {
 
 void testPrintf(Logger logger) {
 
-  String str = "String";
-  char c = 'x';
-  float f = 123.123;
+  // http://www.cplusplus.com/reference/cstdio/printf/
 
-  logger.notice("Type String = [%s]", str.c_str());
-  logger.notice("Type char = [%c]", c);
-  logger.notice("Type float = [%.6g]", f);
+  int d = 392;
+  uint16_t u = 7235;
+  uint16_t o = 10; // 12 octal
+  uint16_t x = 15; // f
+  uint16_t X = 15; // F
+  float f = 392.65;
+  float F = 392.65;
+  float e = 3.9265e+2;
+  float E = 3.9265e+2;
+  float g = 392.65;
+  float G = 392.65;
+  String s = "sample";
+  char c = 'a';
+  
+  logger.notice("int = [%d]", d);
+  logger.notice("uint16_t = [%u]", u);
+  logger.notice("octal = [%o]", o);
+  logger.notice("hexadecimal = [%x]", x);
+  logger.notice("hexadecimal uppercase = [%X]", X);
+  logger.notice("float (f) = [%f]", f);
+  logger.notice("float (F) = [%F]", F);
+  logger.notice("float (e) = [%e]", e);
+  logger.notice("float (E) = [%E]", E);
+  logger.notice("float (g) = [%g]", g);
+  logger.notice("float (G) = [%G]", G);
+  logger.notice("String = [%s]", s.c_str());
+  logger.notice("char = [%c]", c);
+  logger.notice("%%");
   logger.notice("%s(%s:%d)", __func__, __FILE__, __LINE__);
 }
 
