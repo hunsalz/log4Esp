@@ -1,9 +1,14 @@
 #ifndef APPENDER_H
 #define APPENDER_H
 
+#ifdef Arduino_h
+// arduino is not compatible with std::vector
+#undef min
+#undef max
+#endif
+#include <vector>
+
 #include <Arduino.h>
-#include <inttypes.h>
-#include <stdarg.h>
 
 namespace log4arduino {
 
@@ -31,10 +36,10 @@ namespace log4arduino {
 
       void setFormatter(FormatterFunction formatterFunction);
 
-      Appender::FilterFunction getFilter();
+      std::vector<Appender::FilterFunction>& getFilter();
 
-      void setFilter(FilterFunction filterFunction);
-      
+      void addFilter(FilterFunction filterFunction);
+
       void setLevel(Level level);
 
       void print(Level level, const char* msg, va_list *args);
@@ -46,8 +51,10 @@ namespace log4arduino {
     private:
 
       Print* _output = NULL;
+      
       FormatterFunction _formatterFunction = NULL;
-      FilterFunction _filterFunction = NULL;
+
+      std::vector<FilterFunction> _filterFunctions;
   };
 }
 

@@ -14,36 +14,35 @@ namespace log4arduino {
     return _name;
   }
 
-
   std::vector<Appender>& Logger::getAppender() {
     return _appender;
   }
 
-  void Logger::setFormatterToAll(Appender::FormatterFunction formatterFunction) {
+  void Logger::addFormatterToAll(Appender::FormatterFunction formatterFunction) {
 
-    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
-      i->setFormatter(formatterFunction);
+    for (auto && fn : _appender) {
+      fn.setFormatter(formatterFunction);
     }
   }
 
-  void Logger::setFilterToAll(Appender::FilterFunction filterFunction) {
+  void Logger::addFilterToAll(Appender::FilterFunction filterFunction) {
 
-    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
-      i->setFilter(filterFunction);
+    for (auto && fn : _appender) {
+      fn.addFilter(filterFunction);
     }
   }
 
-  void Logger::setLevelToAll(Appender::Level level) {
+  void Logger::addLevelToAll(Appender::Level level) {
 
-    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
-      i->setLevel(level);
+    for (auto && fn : _appender) {
+      fn.setLevel(level);
     }
   }
 
   void Logger::print(Appender::Level level, const char* msg, va_list *args) {
     
-    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
-      i->print(level, msg, args);
+    for (auto && fn : _appender) {
+      fn.print(level, msg, args);
     }
   }
 

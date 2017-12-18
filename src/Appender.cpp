@@ -38,17 +38,17 @@ namespace log4arduino {
     _formatterFunction = formatterFunction;
   }
 
-  Appender::FilterFunction Appender::getFilter() {
-    return _filterFunction;
+  std::vector<Appender::FilterFunction>& Appender::getFilter() {
+    return _filterFunctions;
   }
 
-  void Appender::setFilter(FilterFunction filterFunction) {
-    _filterFunction = filterFunction;
+  void Appender::addFilter(FilterFunction filterFunction) {
+    _filterFunctions.push_back(filterFunction);
   }
 
   void Appender::setLevel(Level level) {
 
-    setFilter([level](Appender::Level _level, const char* msg, va_list *args) -> bool {
+    addFilter([level](Appender::Level _level, const char* msg, va_list *args) -> bool {
       
       if (_level <= level) {
         return false;
@@ -62,12 +62,14 @@ namespace log4arduino {
 
     if (getFormatter()) {
       bool filter = false;
-      if (getFilter()) {
-        filter = _filterFunction(level, msg, args);
+      for (auto && fn : _filterFunctions) {
+        filter = fn(level, msg, args);
+        if (filter) break;
       }
       if (!filter) {
         _formatterFunction(getOutput(), level, msg, args);
       } else {
+        // TODO: remove debug output
         Serial.println("FILTER OUTPUT !!!");
       }
     }

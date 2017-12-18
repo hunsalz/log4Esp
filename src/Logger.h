@@ -8,7 +8,6 @@
 #endif
 #include <vector>
 
-#include <Arduino.h>
 #include <inttypes.h>
 #include <stdarg.h>
 
@@ -26,6 +25,7 @@ namespace log4arduino {
         
         va_list args;
         va_start(args, msg);
+        // TODO remove debug output
         // Serial.print("### ");
         // Serial.print(getName());
         // Serial.println(" ### ");
@@ -37,21 +37,21 @@ namespace log4arduino {
 
       std::vector<Appender>& getAppender();
 
-      void setFormatterToAll(Appender::FormatterFunction formatterFunction);
+      void addFormatterToAll(Appender::FormatterFunction formatterFunction);
 
-      void setFilterToAll(Appender::FilterFunction filterFunction);
+      void addFilterToAll(Appender::FilterFunction filterFunction);
 
-      void setLevelToAll(Appender::Level level);
+      void addLevelToAll(Appender::Level level);
+
+      void print(Appender::Level level, const char* msg, va_list *args);
 
       static Appender getDefaultSerialAppender();
 
     private:
 
-      std::vector<Appender> _appender;
-
       const char* _name;
 
-      void print(Appender::Level level, const char* msg, va_list *args);
+      std::vector<Appender> _appender;
   };
 
   extern Logger LOG;

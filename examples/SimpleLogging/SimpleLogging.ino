@@ -20,7 +20,8 @@ void callDefaultLoggerWithFilter() {
   Serial.println("==== Default Logger with Filter =====");
   Serial.println("=====================================");
   
-  LOG.getAppender().at(0).setFilter([](Appender::Level level, const char* msg, va_list *args) -> bool {
+  //LOG.addFilterToAll(...);
+  LOG.getAppender().at(0).addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool {
     
     Serial.printf("FILTER CALLED :: Level[%d] == Level[%d]\n", level, Appender::Level::NOTICE);
     if (level == Appender::Level::NOTICE) {
@@ -38,7 +39,7 @@ void callDefaultLoggerWithLevelFilter() {
   Serial.println("==== Default Logger with Level filter =====");
   Serial.println("===========================================");
   
-  LOG.setLevelToAll(Appender::ERROR);
+  LOG.addLevelToAll(Appender::ERROR);
   //LOG.getAppender().at(0).setLevel(Appender::ERROR);
   testPrintf(LOG);
 }
@@ -95,7 +96,7 @@ void setup() {
   delay(300);
   Serial.println();
 
-  //callDefaultLogger();
+  callDefaultLogger();
 
   //callDefaultLoggerWithFilter();
 
