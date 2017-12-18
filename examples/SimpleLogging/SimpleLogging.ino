@@ -3,7 +3,89 @@
 #include <Logger.h>
 
 using log4arduino::Logger;
+using log4arduino::LOG;
 using log4arduino::Appender;
+
+void callDefaultLogger() {
+  
+  Serial.println("=========================");
+  Serial.println("==== Default Logger =====");
+  Serial.println("=========================");
+  testPrintf(LOG);
+}
+
+void callDefaultLoggerWithFilter() {
+  
+  Serial.println("=====================================");
+  Serial.println("==== Default Logger with Filter =====");
+  Serial.println("=====================================");
+  
+  LOG.getAppender().at(0).setFilter([](Appender::Level level, const char* msg, va_list *args) -> bool {
+    
+    Serial.printf("FILTER CALLED :: Level[%d] == Level[%d]\n", level, Appender::Level::NOTICE);
+    if (level == Appender::Level::NOTICE) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  testPrintf(LOG);
+}
+
+void callDefaultLoggerWithLevelFilter() {
+  
+  Serial.println("===========================================");
+  Serial.println("==== Default Logger with Level filter =====");
+  Serial.println("===========================================");
+  
+  LOG.setLevelToAll(Appender::ERROR);
+  //LOG.getAppender().at(0).setLevel(Appender::ERROR);
+  testPrintf(LOG);
+}
+
+void callMyLoggerWithoutAppender() {
+  
+  Serial.println("========================================");
+  Serial.println("==== MyLogger without any Appender =====");
+  Serial.println("========================================");
+  testPrintf(Logger("MyLogger"));
+}
+
+void callMyLoggerWithAppender() {
+  
+  Serial.println("=================================");
+  Serial.println("==== MyLogger with Appender =====");
+  Serial.println("=================================");
+
+  // Logger logger = Logger("MyLogger");
+  // Appender appender = Appender(&Serial);
+  // appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
+    
+  //   output.print(F("[TIME]["));
+  //   output.print(Appender::toString(level));
+  //   output.print(F("] "));
+  //   size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
+  //   char buffer[length];
+  //   vsnprintf(buffer, length, msg, *args);
+  //   output.print(buffer);
+  //   output.println();
+  // });
+  // logger.add(appender);
+
+  // testPrintf(logger);
+}
+
+void testPrintf(Logger logger) {
+
+  String str = "String";
+  char c = 'x';
+  float f = 123.123;
+
+  logger.notice("Type String = [%s]", str.c_str());
+  logger.notice("Type char = [%c]", c);
+  logger.notice("Type float = [%.6g]", f);
+  logger.notice("%s(%s:%d)", __func__, __FILE__, __LINE__);
+}
 
 void setup() {
 
@@ -13,36 +95,30 @@ void setup() {
   delay(300);
   Serial.println();
 
-  float f = 123.123;
-  String str = "String";
-  char ch = 'x';
+  //callDefaultLogger();
 
-  Serial.println("==== CASE 1 =====");
-  log4arduino::LOG.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  //callDefaultLoggerWithFilter();
 
-  Serial.println("==== CASE 2 =====");
-  Logger logger = Logger("MyLogger");
-  logger.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  callDefaultLoggerWithLevelFilter();
 
-  Serial.println("==== CASE 3 =====");
-  logger.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  //callMyLoggerWithoutAppender();
 
-  Appender appender = Appender(&Serial);
-  appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
-    
-    output.print(F("[TIME]["));
-    output.print(Appender::toString(level));
-    output.print(F("] "));
-    size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-    char buffer[length];
-    vsnprintf(buffer, length, msg, *args);
-    output.print(buffer);
-    output.println();
-  });
-  log4arduino::LOG.add(appender);
+  //callMyLoggerWithAppender();
+
+
+
+
+
+  // Serial.println("===============================================");
+  // Serial.println("==== Default Logger and MyLogger combined =====");
+  // Serial.println("===============================================");
   
-  Serial.println("==== CASE 4 =====");
-  log4arduino::LOG.notice("String = [%s] Char = [%c] float = [%.6g] - %s(%s:%d)", str.c_str(), ch, f, __func__, __FILE__, __LINE__);
+  // LOG.add(appender);
+
+  // LOG.notice("Type String = [%s]", str.c_str());
+  // LOG.notice("Type char = [%c]", c);
+  // LOG.notice("Type float = [%.6g]", f);
+  // LOG.notice("%s(%s:%d)", __func__, __FILE__, __LINE__); 
 }
 
 void loop() {

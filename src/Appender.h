@@ -12,34 +12,42 @@ namespace log4arduino {
     public:
       
       enum Level {
-        VERBOSE = 0,
-        NOTICE,
-        WARNING,
-        ERROR,
-        FATAL,
-        SILENT
+        FATAL = 0,
+        ERROR = 1,
+        WARNING = 2,
+        NOTICE = 3,
+        VERBOSE = 4
       };
 
       typedef std::function<void(Print& output, Level level, char msg[], va_list *args)> FormatterFunction;
 
-      Appender(Print* output);
+      typedef std::function<bool(Level level, char msg[], va_list *args)> FilterFunction;
+
+      Appender(Print* output, bool addDefaultFormatter = true);
 
       Print& getOutput();
 
+      Appender::FormatterFunction getFormatter();
+
       void setFormatter(FormatterFunction formatterFunction);
 
+      Appender::FilterFunction getFilter();
+
+      void setFilter(FilterFunction filterFunction);
+
+      void setLevel(Level level);
+
       void print(Level level, char msg[], va_list *args);
+
+      static Appender::FormatterFunction getDefaultFormatter();
 
       static const __FlashStringHelper* toString(Level level);
 
     private:
 
       Print* _output = NULL;
-      FormatterFunction _formatterFunction;
-
-      void defaultFormatter(Print& output, Level level, char msg[], va_list *args);
-
-      void printFormat(Print& output, const char format, va_list *args);
+      FormatterFunction _formatterFunction = NULL;
+      FilterFunction _filterFunction = NULL;
   };
 }
 

@@ -2,44 +2,47 @@
 
 namespace log4arduino {
 
-  Logger::Logger(const char* name) {
+  Logger::Logger(const char* name, bool addDefaultSerialAppender) {
+    
     _name = name;
+    if (addDefaultSerialAppender) {
+      _appender.push_back(getDefaultSerialAppender());
+    }
   }
 
   String Logger::getName() {
     return _name;
   }
 
-  Appender Logger::get(uint16_t index) {
-    return _appender.at(index);
+
+  std::vector<Appender>& Logger::getAppender() {
+    return _appender;
   }
 
-  void Logger::add(Appender appender) {
-    _appender.push_back(appender);
+  void Logger::setFormatterToAll(Appender::FormatterFunction formatterFunction) {
+
+    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
+      i->setFormatter(formatterFunction);
+    }
+  }
+
+  void Logger::setLevelToAll(Appender::Level level) {
+
+    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
+      i->setLevel(level);
+    }
   }
 
   void Logger::print(Appender::Level level, char msg[], va_list *args) {
     
-    if (_appender.empty()) {
-      Appender appender = Appender(&Serial);
-      appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
-        
-        output.print(Appender::toString(level));
-        output.print(F("] "));
-        size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-        char buffer[length];
-        vsnprintf(buffer, length, msg, *args);
-        output.print(buffer);
-        output.println();
-      });
-      add(appender);
-    }
     for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
-        
       i->print(level, msg, args);
-        
     }
   }
 
-  extern Logger LOG = Logger("default");
+  Appender Logger::getDefaultSerialAppender() {
+    return Appender(&Serial, true);
+  }
+
+  extern Logger LOG = Logger();
 }

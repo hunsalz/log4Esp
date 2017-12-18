@@ -18,47 +18,83 @@ namespace log4arduino {
   //   LEVEL_SILENT
   // };
 
-  Appender::Appender(Print* output) {
+  Appender::Appender(Print* output, bool addDefaultFormatter) {
+    
     _output = output;
+    if (addDefaultFormatter) {
+      setFormatter(Appender::getDefaultFormatter());
+    }
   }
 
   Print& Appender::getOutput() {
     return *_output;
   }
 
+  Appender::FormatterFunction Appender::getFormatter() {
+    return _formatterFunction;
+  }
+
   void Appender::setFormatter(FormatterFunction formatterFunction) {
     _formatterFunction = formatterFunction;
   }
 
+  Appender::FilterFunction Appender::getFilter() {
+    return _filterFunction;
+  }
+
+  void Appender::setFilter(FilterFunction filterFunction) {
+    _filterFunction = filterFunction;
+  }
+
+  void Appender::setLevel(Level level) {
+
+    setFilter([level](Appender::Level _level, const char* msg, va_list *args) -> bool {
+      
+      if (_level <= level) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+  }
+
   void Appender::print(Level level, char msg[], va_list *args) {
 
-    if (_formatterFunction) {
-      _formatterFunction(getOutput(), level, msg, args);
-    } else {
-      defaultFormatter(getOutput(), level, msg, args);
+    if (getFormatter()) {
+      bool filter = false;
+      if (getFilter()) {
+        filter = _filterFunction(level, msg, args);
+      }
+      if (!filter) {
+        _formatterFunction(getOutput(), level, msg, args);
+      } else {
+        Serial.println("FILTER OUTPUT !!!");
+      }
     }
   }
 
-  void Appender::defaultFormatter(Print& output, Level level, char msg[], va_list *args) {
-    
-    output.print(F("["));
-    output.print(Appender::toString(level));
-    output.print(F("] "));
-    size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-    char buffer[length];
-    vsnprintf(buffer, length, msg, *args);
-    output.print(buffer);
-    output.println();
+  Appender::FormatterFunction Appender::getDefaultFormatter() {
+        
+    return  [](Print& output, Appender::Level level, const char* msg, va_list *args) {
+
+      output.print(F("["));
+      output.print(Appender::toString(level));
+      output.print(F("] "));
+      size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
+      char buffer[length];
+      vsnprintf(buffer, length, msg, *args);
+      output.print(buffer);
+      output.println();
+    };
   }
 
   const __FlashStringHelper* Appender::toString(Appender::Level level) {
 
     switch (level) {
-      case Appender::Level::NOTICE: return F("NOTICE"); break;
-      case Appender::Level::WARNING: return F("WARNING"); break;
-      case Appender::Level::ERROR: return F("ERROR"); break;
       case Appender::Level::FATAL: return F("FATAL"); break;
-      case Appender::Level::SILENT: return F("SILENT"); break;
+      case Appender::Level::ERROR: return F("ERROR"); break;
+      case Appender::Level::WARNING: return F("WARNING"); break;
+      case Appender::Level::NOTICE: return F("NOTICE"); break;
       default: return F("VERBOSE"); break;
     }
   }

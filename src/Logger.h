@@ -20,7 +20,7 @@ namespace log4arduino {
 
     public:
 
-      Logger(const char* name);
+      Logger(const char* name = "default", bool addDefaultSerialAppender = true);
 
       void notice(char msg[], ...) {
         
@@ -35,9 +35,13 @@ namespace log4arduino {
 
       String getName();
 
-      Appender get(uint16_t index);
+      std::vector<Appender>& getAppender();
 
-      void add(Appender appender);
+      void setFormatterToAll(Appender::FormatterFunction formatterFunction);
+
+      void setLevelToAll(Appender::Level level);
+
+      static Appender getDefaultSerialAppender();
 
     private:
 
