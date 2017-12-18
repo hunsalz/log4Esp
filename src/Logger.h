@@ -22,7 +22,7 @@ namespace log4arduino {
 
       Logger(const char* name = "default", bool addDefaultSerialAppender = true);
 
-      void notice(char msg[], ...) {
+      void notice(const char* msg, ...) {
         
         va_list args;
         va_start(args, msg);
@@ -49,7 +49,7 @@ namespace log4arduino {
 
       const char* _name;
 
-      void print(Appender::Level level, char msg[], va_list *args);
+      void print(Appender::Level level, const char* msg, va_list *args);
   };
 
   extern Logger LOG;

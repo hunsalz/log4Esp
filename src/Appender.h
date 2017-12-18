@@ -19,9 +19,9 @@ namespace log4arduino {
         VERBOSE = 4
       };
 
-      typedef std::function<void(Print& output, Level level, char msg[], va_list *args)> FormatterFunction;
+      typedef std::function<void(Print& output, Level level, const char* msg, va_list *args)> FormatterFunction;
 
-      typedef std::function<bool(Level level, char msg[], va_list *args)> FilterFunction;
+      typedef std::function<bool(Level level, const char* msg, va_list *args)> FilterFunction;
 
       Appender(Print* output, bool addDefaultFormatter = true);
 
@@ -37,7 +37,7 @@ namespace log4arduino {
 
       void setLevel(Level level);
 
-      void print(Level level, char msg[], va_list *args);
+      void print(Level level, const char* msg, va_list *args);
 
       static Appender::FormatterFunction getDefaultFormatter();
 

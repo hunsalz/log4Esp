@@ -33,7 +33,7 @@ namespace log4arduino {
     }
   }
 
-  void Logger::print(Appender::Level level, char msg[], va_list *args) {
+  void Logger::print(Appender::Level level, const char* msg, va_list *args) {
     
     for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
       i->print(level, msg, args);

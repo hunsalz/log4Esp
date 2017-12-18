@@ -58,7 +58,7 @@ namespace log4arduino {
     });
   }
 
-  void Appender::print(Level level, char msg[], va_list *args) {
+  void Appender::print(Level level, const char* msg, va_list *args) {
 
     if (getFormatter()) {
       bool filter = false;
