@@ -39,6 +39,8 @@ namespace log4arduino {
 
       void setFormatterToAll(Appender::FormatterFunction formatterFunction);
 
+      void setFilterToAll(Appender::FilterFunction filterFunction);
+
       void setLevelToAll(Appender::Level level);
 
       static Appender getDefaultSerialAppender();

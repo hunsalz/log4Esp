@@ -34,7 +34,7 @@ namespace log4arduino {
       Appender::FilterFunction getFilter();
 
       void setFilter(FilterFunction filterFunction);
-
+      
       void setLevel(Level level);
 
       void print(Level level, const char* msg, va_list *args);

@@ -26,6 +26,13 @@ namespace log4arduino {
     }
   }
 
+  void Logger::setFilterToAll(Appender::FilterFunction filterFunction) {
+
+    for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
+      i->setFilter(filterFunction);
+    }
+  }
+
   void Logger::setLevelToAll(Appender::Level level) {
 
     for (std::vector<Appender>::iterator i = _appender.begin(); i != _appender.end(); ++i) {
