@@ -50,7 +50,7 @@ namespace log4arduino {
   }
 
   Appender Logger::getDefaultSerialAppender() {
-    return Appender(&Serial, true);
+    return SerialAppender(&Serial, true);
   }
 
   extern Logger LOG = Logger();

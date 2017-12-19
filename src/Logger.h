@@ -12,6 +12,7 @@
 #include <stdarg.h>
 
 #include "Appender.h"
+#include "SerialAppender.h"
 
 namespace log4arduino {
 

@@ -16,16 +16,12 @@ namespace log4arduino {
     LEVEL_FATAL
   };
 
-  Appender::Appender(Print* output, bool addDefaultFormatter) {
-    
-    _output = output;
-    if (addDefaultFormatter) {
-      setFormatter(Appender::getDefaultFormatter());
-    }
-  }
-
   Print& Appender::getOutput() {
     return *_output;
+  }
+
+  void Appender::setOutput(Print* output) {
+    _output = output;
   }
 
   Appender::FormatterFunction Appender::getFormatter() {

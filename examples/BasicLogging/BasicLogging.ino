@@ -1,8 +1,10 @@
 #include <Logger.h>
+#include <SerialAppender.h>
 
 using log4arduino::Logger;
 using log4arduino::LOG;
 using log4arduino::Appender;
+using log4arduino::SerialAppender;
 
 void callDefaultLogger() {
   
@@ -61,8 +63,8 @@ void callMyLoggerWithLevelFilter() {
   
   Logger logger = Logger("MyLogger");
   // use one of two possible methods to add an Level filter
-  logger.addLevelToAll(Appender::ERROR); // adding filter to all Appenders
-  // logger.getAppender().at(0).setLevel(Appender::ERROR); // adding filter to only one specific Appender
+  logger.addLevelToAll(Appender::ERROR); // adding Level filter to all Appenders
+  // logger.getAppender().at(0).setLevel(Appender::ERROR); // adding Level filter to only one specific Appender
   logger.fatal("A fatal message");
   logger.error("An error message");
   logger.warning("A warning message"); // won't be displayed with level definition ERROR (see above)
@@ -70,15 +72,16 @@ void callMyLoggerWithLevelFilter() {
   logger.verbose("A verbose message"); // won't be displayed with level definition ERROR (see above)
 }
 
-void callMultipleAppender() {
+void callAppenderWithMyFormatter() {
   
-  Serial.println("+--------------------+");
-  Serial.println("| Multiple Appenders |");
-  Serial.println("+--------------------+");
+  Serial.println("+---------------------------+");
+  Serial.println("| Appender with my Formatter|");
+  Serial.println("+---------------------------+");
 
   Logger logger = Logger("MyLogger");
-  Appender appender = Appender(&Serial);
-  appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
+  // use one of two possible methods to add an Level filter
+  // logger.getAppender().at(0).setFomatter(...); // adding Formatter to only one specific Appender
+  logger.addFormatterToAll([](Print& output, Appender::Level level, const char* msg, va_list *args) { // adding formatter to all Appenders
 
     output.print(F("[ARDUINO]["));
     output.print(Appender::toString(level, false));
@@ -89,7 +92,18 @@ void callMultipleAppender() {
     output.print(buffer);
     output.println();
   });
-  logger .getAppender().push_back(appender);
+
+  testPrintf(logger);
+}
+
+void callMultipleAppender() {
+  
+  Serial.println("+--------------------+");
+  Serial.println("| Multiple Appenders |");
+  Serial.println("+--------------------+");
+
+  Logger logger = Logger("MyLogger");
+  logger.getAppender().push_back(SerialAppender(&Serial));
 
   testPrintf(logger);
 }
@@ -125,6 +139,7 @@ void testPrintf(Logger logger) {
   logger.verbose("float (G) = [%G]", G);
   logger.verbose("String = [%s]", s.c_str());
   logger.verbose("char = [%c]", c);
+  // TODO fix logger.verbose(F("PROGMEM"));
   logger.verbose("%%");
   logger.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__);
 }
@@ -146,6 +161,8 @@ void setup() {
   callMyLoggerWithFilter();
 
   callMyLoggerWithLevelFilter();
+
+  callAppenderWithMyFormatter();
 
   callMultipleAppender();
 }
