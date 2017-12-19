@@ -66,9 +66,6 @@ namespace log4arduino {
       }
       if (!filter) {
         _formatterFunction(getOutput(), level, msg, args);
-      } else {
-        // TODO: remove debug output
-        Serial.println("FILTER OUTPUT !!!");
       }
     }
   }

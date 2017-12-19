@@ -1,5 +1,3 @@
-#include <ArduinoLog.h> // https://github.com/thijse/Arduino-Log
-
 #include <Logger.h>
 
 using log4arduino::Logger;
@@ -8,76 +6,92 @@ using log4arduino::Appender;
 
 void callDefaultLogger() {
   
-  Serial.println("=========================");
-  Serial.println("==== Default Logger =====");
-  Serial.println("=========================");
+  Serial.println("+----------------+");
+  Serial.println("| Default Logger |");
+  Serial.println("+----------------+");
+  
   testPrintf(LOG);
 }
 
-void callDefaultLoggerWithFilter() {
+void callMyLoggerWithAppender() {
   
-  Serial.println("=====================================");
-  Serial.println("==== Default Logger with Filter =====");
-  Serial.println("=====================================");
+  Serial.println("+------------------------+");
+  Serial.println("| MyLogger with Appender |");
+  Serial.println("+------------------------+");
+
+  testPrintf(Logger("MyLogger"));
+}
+
+void callMyLoggerWithoutAppender() {
   
-  //LOG.addFilterToAll(...);
-  LOG.getAppender().at(0).addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool {
+  Serial.println("+-------------------------------+");
+  Serial.println("| MyLogger without any Appender |");
+  Serial.println("+-------------------------------+");
+  
+  testPrintf(Logger("MyLogger", false)); // won't display anything without any Appender
+}
+
+void callMyLoggerWithFilter() {
+  
+  Serial.println("+----------------------------+");
+  Serial.println("| Default Logger with Filter |");
+  Serial.println("+----------------------------+");
+  
+  Logger logger = Logger("MyLogger");
+  // use one of two possible methods to add an Filter
+  // logger.addFilterToAll(...); // adding Filter to all Appenders
+  logger.getAppender().at(0).addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool { // adding filter to only one specific appender
     
-    Serial.printf("FILTER CALLED :: Level[%d] == Level[%d]\n", level, Appender::Level::VERBOSE);
-    if (level == Appender::Level::VERBOSE) {
+    if (strstr(msg, "float")) {
+      Serial.printf("Suppress messages containing 'float'");
       return true;
     } else {
       return false;
     }
   });
-  testPrintf(LOG);
+  
+  testPrintf(logger);
 }
 
-void callDefaultLoggerWithLevelFilter() {
+void callMyLoggerWithLevelFilter() {
   
-  Serial.println("===========================================");
-  Serial.println("==== Default Logger with Level filter =====");
-  Serial.println("===========================================");
+  Serial.println("+----------------------------------+");
+  Serial.println("| Default Logger with Level filter |");
+  Serial.println("+----------------------------------+");
   
-  LOG.addLevelToAll(Appender::ERROR);
-  //LOG.getAppender().at(0).setLevel(Appender::ERROR);
-  LOG.fatal("A fatal message");
-  LOG.error("An error message");
-  LOG.warning("A warning message"); // won't be displayed with level definition ERROR
-  LOG.verbose("A notice message"); // won't be displayed with level definition ERROR
-  LOG.verbose("A verbose message"); // won't be displayed with level definition ERROR
+  Logger logger = Logger("MyLogger");
+  // use one of two possible methods to add an Level filter
+  logger.addLevelToAll(Appender::ERROR); // adding filter to all Appenders
+  // logger.getAppender().at(0).setLevel(Appender::ERROR); // adding filter to only one specific Appender
+  logger.fatal("A fatal message");
+  logger.error("An error message");
+  logger.warning("A warning message"); // won't be displayed with level definition ERROR (see above)
+  logger.verbose("A notice message"); // won't be displayed with level definition ERROR (see above)
+  logger.verbose("A verbose message"); // won't be displayed with level definition ERROR (see above)
 }
 
-void callMyLoggerWithoutAppender() {
+void callMultipleAppender() {
   
-  Serial.println("========================================");
-  Serial.println("==== MyLogger without any Appender =====");
-  Serial.println("========================================");
-  testPrintf(Logger("MyLogger"));
-}
+  Serial.println("+--------------------+");
+  Serial.println("| Multiple Appenders |");
+  Serial.println("+--------------------+");
 
-void callMyLoggerWithAppender() {
-  
-  Serial.println("=================================");
-  Serial.println("==== MyLogger with Appender =====");
-  Serial.println("=================================");
+  Logger logger = Logger("MyLogger");
+  Appender appender = Appender(&Serial);
+  appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
 
-  // Logger logger = Logger("MyLogger");
-  // Appender appender = Appender(&Serial);
-  // appender.setFormatter([](Print& output, Appender::Level level, const char* msg, va_list *args) {
-    
-  //   output.print(F("[TIME]["));
-  //   output.print(Appender::toString(level));
-  //   output.print(F("] "));
-  //   size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-  //   char buffer[length];
-  //   vsnprintf(buffer, length, msg, *args);
-  //   output.print(buffer);
-  //   output.println();
-  // });
-  // logger.add(appender);
+    output.print(F("[ARDUINO]["));
+    output.print(Appender::toString(level, false));
+    output.print(F("] "));
+    size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
+    char buffer[length];
+    vsnprintf(buffer, length, msg, *args);
+    output.print(buffer);
+    output.println();
+  });
+  logger .getAppender().push_back(appender);
 
-  // testPrintf(logger);
+  testPrintf(logger);
 }
 
 void testPrintf(Logger logger) {
@@ -125,28 +139,15 @@ void setup() {
 
   callDefaultLogger();
 
-  //callDefaultLoggerWithFilter();
+  callMyLoggerWithAppender();
 
-  callDefaultLoggerWithLevelFilter();
+  callMyLoggerWithoutAppender();
 
-  //callMyLoggerWithoutAppender();
+  callMyLoggerWithFilter();
 
-  //callMyLoggerWithAppender();
+  callMyLoggerWithLevelFilter();
 
-
-
-
-
-  // Serial.println("===============================================");
-  // Serial.println("==== Default Logger and MyLogger combined =====");
-  // Serial.println("===============================================");
-  
-  // LOG.add(appender);
-
-  // LOG.verbose("Type String = [%s]", str.c_str());
-  // LOG.verbose("Type char = [%c]", c);
-  // LOG.verbose("Type float = [%.6g]", f);
-  // LOG.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__); 
+  callMultipleAppender();
 }
 
 void loop() {
