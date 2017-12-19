@@ -45,7 +45,7 @@ namespace log4arduino {
       void setLevel(Level level);
 
       void print(Level level, const char* msg, va_list *args);
-
+      
       static Appender::FormatterFunction getDefaultFormatter();
 
       static const __FlashStringHelper* toString(Level level, bool shortName = true);

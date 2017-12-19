@@ -21,7 +21,7 @@ void setup() {
   Logger logger = Logger("MyLogger");
 
   RollingFileAppender appender = RollingFileAppender("/test.log");
-  //logger.getAppender().push_back(appender);
+  logger.getAppender().push_back(appender);
 
   logger.verbose("TEST RollingFileAppender");
 }

@@ -139,7 +139,7 @@ void testPrintf(Logger logger) {
   logger.verbose("float (G) = [%G]", G);
   logger.verbose("String = [%s]", s.c_str());
   logger.verbose("char = [%c]", c);
-  // TODO fix logger.verbose(F("PROGMEM"));
+  logger.verbose(F("PROGMEM"));
   logger.verbose("%%");
   logger.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__);
 }

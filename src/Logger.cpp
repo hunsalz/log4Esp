@@ -49,6 +49,11 @@ namespace log4arduino {
     va_end(args);
   }
 
+  void Logger::print(Appender::Level level, const __FlashStringHelper *msg, ...) {
+
+    // TODO add PROGMEN implementation
+  }
+
   Appender Logger::getDefaultSerialAppender() {
     return SerialAppender(&Serial, true);
   }

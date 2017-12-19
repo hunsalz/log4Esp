@@ -64,6 +64,8 @@ namespace log4arduino {
 
       void print(Appender::Level level, const char* msg, ...);
 
+      void print(Appender::Level level, const __FlashStringHelper *msg, ...);
+
       static Appender getDefaultSerialAppender();
 
     private:
