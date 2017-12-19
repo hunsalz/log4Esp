@@ -20,8 +20,8 @@ namespace log4arduino {
         FATAL = 0,
         ERROR = 1,
         WARNING = 2,
-        NOTICE = 3,
-        VERBOSE = 4
+        VERBOSE = 3,
+        TRACE = 4
       };
 
       typedef std::function<void(Print& output, Level level, const char* msg, va_list *args)> FormatterFunction;
@@ -46,7 +46,7 @@ namespace log4arduino {
 
       static Appender::FormatterFunction getDefaultFormatter();
 
-      static const __FlashStringHelper* toString(Level level);
+      static const __FlashStringHelper* toString(Level level, bool shortName = true);
 
     private:
 

@@ -2,21 +2,19 @@
 
 namespace log4arduino {
 
-  // const char LEVEL_VERBOSE[] PROGMEM = "VERBOSE";
-  // const char LEVEL_NOTICE[] PROGMEM = "NOTICE";
-  // const char LEVEL_WARNING[] PROGMEM = "WARNING";
-  // const char LEVEL_ERROR[] PROGMEM = "ERROR";
-  // const char LEVEL_FATAL[] PROGMEM = "FATAL";
-  // const char LEVEL_SILENT[] PROGMEM = "SILENT";
+  const char LEVEL_FATAL[] PROGMEM = "FATAL";
+  const char LEVEL_ERROR[] PROGMEM = "ERROR";
+  const char LEVEL_WARNING[] PROGMEM = "WARNING";
+  const char LEVEL_VERBOSE[] PROGMEM = "VERBOSE";
+  const char LEVEL_NOTICE[] PROGMEM = "TRACE";
 
-  // const char* const LOG_LEVEL_STRINGS[] PROGMEM = {
-  //   LEVEL_VERBOSE,
-  //   LEVEL_NOTICE,
-  //   LEVEL_WARNING,
-  //   LEVEL_ERROR,
-  //   LEVEL_FATAL,
-  //   LEVEL_SILENT
-  // };
+  const char* const LOG_LEVEL_STRINGS[] PROGMEM = {
+    LEVEL_VERBOSE,
+    LEVEL_NOTICE,
+    LEVEL_WARNING,
+    LEVEL_ERROR,
+    LEVEL_FATAL
+  };
 
   Appender::Appender(Print* output, bool addDefaultFormatter) {
     
@@ -80,7 +78,7 @@ namespace log4arduino {
     return  [](Print& output, Appender::Level level, const char* msg, va_list *args) {
 
       output.print(F("["));
-      output.print(Appender::toString(level));
+      output.print(Appender::toString(level, true));
       output.print(F("] "));
       size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
       char buffer[length];
@@ -90,14 +88,14 @@ namespace log4arduino {
     };
   }
 
-  const __FlashStringHelper* Appender::toString(Appender::Level level) {
+  const __FlashStringHelper* Appender::toString(Appender::Level level, bool shortName) {
 
     switch (level) {
-      case Appender::Level::FATAL: return F("FATAL"); break;
-      case Appender::Level::ERROR: return F("ERROR"); break;
-      case Appender::Level::WARNING: return F("WARNING"); break;
-      case Appender::Level::NOTICE: return F("NOTICE"); break;
-      default: return F("VERBOSE"); break;
+      case Appender::Level::FATAL: return shortName ? F("F") : F("FATAL"); break;
+      case Appender::Level::ERROR: return shortName ? F("E") : F("ERROR"); break;
+      case Appender::Level::WARNING: return shortName ? F("W") : F("WARNING"); break;
+      case Appender::Level::VERBOSE: return shortName ? F("V") : F("VERBOSE"); break;
+      default: return shortName ? F("T") : F("TRACE"); break;
     }
   }
 }

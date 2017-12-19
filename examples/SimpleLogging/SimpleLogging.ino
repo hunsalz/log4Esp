@@ -23,8 +23,8 @@ void callDefaultLoggerWithFilter() {
   //LOG.addFilterToAll(...);
   LOG.getAppender().at(0).addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool {
     
-    Serial.printf("FILTER CALLED :: Level[%d] == Level[%d]\n", level, Appender::Level::NOTICE);
-    if (level == Appender::Level::NOTICE) {
+    Serial.printf("FILTER CALLED :: Level[%d] == Level[%d]\n", level, Appender::Level::VERBOSE);
+    if (level == Appender::Level::VERBOSE) {
       return true;
     } else {
       return false;
@@ -41,7 +41,11 @@ void callDefaultLoggerWithLevelFilter() {
   
   LOG.addLevelToAll(Appender::ERROR);
   //LOG.getAppender().at(0).setLevel(Appender::ERROR);
-  testPrintf(LOG);
+  LOG.fatal("A fatal message");
+  LOG.error("An error message");
+  LOG.warning("A warning message"); // won't be displayed with level definition ERROR
+  LOG.verbose("A notice message"); // won't be displayed with level definition ERROR
+  LOG.verbose("A verbose message"); // won't be displayed with level definition ERROR
 }
 
 void callMyLoggerWithoutAppender() {
@@ -94,21 +98,21 @@ void testPrintf(Logger logger) {
   String s = "sample";
   char c = 'a';
   
-  logger.notice("int = [%d]", d);
-  logger.notice("uint16_t = [%u]", u);
-  logger.notice("octal = [%o]", o);
-  logger.notice("hexadecimal = [%x]", x);
-  logger.notice("hexadecimal uppercase = [%X]", X);
-  logger.notice("float (f) = [%f]", f);
-  logger.notice("float (F) = [%F]", F);
-  logger.notice("float (e) = [%e]", e);
-  logger.notice("float (E) = [%E]", E);
-  logger.notice("float (g) = [%g]", g);
-  logger.notice("float (G) = [%G]", G);
-  logger.notice("String = [%s]", s.c_str());
-  logger.notice("char = [%c]", c);
-  logger.notice("%%");
-  logger.notice("%s(%s:%d)", __func__, __FILE__, __LINE__);
+  logger.verbose("int = [%d]", d);
+  logger.verbose("uint16_t = [%u]", u);
+  logger.verbose("octal = [%o]", o);
+  logger.verbose("hexadecimal = [%x]", x);
+  logger.verbose("hexadecimal uppercase = [%X]", X);
+  logger.verbose("float (f) = [%f]", f);
+  logger.verbose("float (F) = [%F]", F);
+  logger.verbose("float (e) = [%e]", e);
+  logger.verbose("float (E) = [%E]", E);
+  logger.verbose("float (g) = [%g]", g);
+  logger.verbose("float (G) = [%G]", G);
+  logger.verbose("String = [%s]", s.c_str());
+  logger.verbose("char = [%c]", c);
+  logger.verbose("%%");
+  logger.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__);
 }
 
 void setup() {
@@ -139,10 +143,10 @@ void setup() {
   
   // LOG.add(appender);
 
-  // LOG.notice("Type String = [%s]", str.c_str());
-  // LOG.notice("Type char = [%c]", c);
-  // LOG.notice("Type float = [%.6g]", f);
-  // LOG.notice("%s(%s:%d)", __func__, __FILE__, __LINE__); 
+  // LOG.verbose("Type String = [%s]", str.c_str());
+  // LOG.verbose("Type char = [%c]", c);
+  // LOG.verbose("Type float = [%.6g]", f);
+  // LOG.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__); 
 }
 
 void loop() {

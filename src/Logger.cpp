@@ -39,11 +39,19 @@ namespace log4arduino {
     }
   }
 
-  void Logger::print(Appender::Level level, const char* msg, va_list *args) {
+  void Logger::print(Appender::Level level, const char* msg, ...) {
     
+    // TODO remove debug output
+    // Serial.print("### ");
+    // Serial.print(getName());
+    // Serial.println(" ### ");
+
+    va_list args;
+    va_start(args, msg);
     for (auto && fn : _appender) {
-      fn.print(level, msg, args);
+      fn.print(level, msg, &args);
     }
+    va_end(args);
   }
 
   Appender Logger::getDefaultSerialAppender() {

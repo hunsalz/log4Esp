@@ -21,16 +21,34 @@ namespace log4arduino {
 
       Logger(const char* name = "default", bool addDefaultSerialAppender = true);
 
-      void notice(const char* msg, ...) {
+      template <class T, typename... Args> 
+      void fatal(T msg, Args... args) {
         
-        va_list args;
-        va_start(args, msg);
-        // TODO remove debug output
-        // Serial.print("### ");
-        // Serial.print(getName());
-        // Serial.println(" ### ");
-        print(Appender::NOTICE, msg, &args);
-        va_end(args);
+        print(Appender::FATAL, msg, args...);
+      }
+
+      template <class T, typename... Args> 
+      void error(T msg, Args... args) {
+        
+        print(Appender::ERROR, msg, args...);
+      }
+
+      template <class T, typename... Args> 
+      void warning(T msg, Args... args) {
+        
+        print(Appender::WARNING, msg, args...);
+      }
+
+      template <class T, typename... Args> 
+      void verbose(T msg, Args... args) {
+        
+        print(Appender::VERBOSE, msg, args...);
+      }
+
+      template <class T, typename... Args> 
+      void trace(T msg, Args... args) {
+        
+        print(Appender::TRACE, msg, args...);
       }
 
       String getName();
@@ -43,7 +61,7 @@ namespace log4arduino {
 
       void addLevelToAll(Appender::Level level);
 
-      void print(Appender::Level level, const char* msg, va_list *args);
+      void print(Appender::Level level, const char* msg, ...);
 
       static Appender getDefaultSerialAppender();
 
