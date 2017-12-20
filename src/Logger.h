@@ -62,9 +62,17 @@ namespace log4arduino {
 
       void addLevelToAll(Appender::Level level);
 
-      void print(Appender::Level level, const char* msg, ...);
-
-      void print(Appender::Level level, const __FlashStringHelper *msg, ...);
+      template <class T>
+      void print(Appender::Level level, T msg, ...) {
+        
+        va_list args;
+        va_start(args, msg);
+        String str = String(msg); // use String constructor to handle PROGMEN and other character representations
+        for (auto && fn : _appender) {
+          fn.print(level, str.c_str(), &args);
+        }
+        va_end(args);
+      }
 
       static Appender getDefaultSerialAppender();
 

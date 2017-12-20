@@ -39,20 +39,20 @@ namespace log4arduino {
     }
   }
 
-  void Logger::print(Appender::Level level, const char* msg, ...) {
+  // void Logger::print(Appender::Level level, const char* msg, ...) {
     
-    va_list args;
-    va_start(args, msg);
-    for (auto && fn : _appender) {
-      fn.print(level, msg, &args);
-    }
-    va_end(args);
-  }
+  //   va_list args;
+  //   va_start(args, msg);
+  //   for (auto && fn : _appender) {
+  //     fn.print(level, msg, &args);
+  //   }
+  //   va_end(args);
+  // }
 
-  void Logger::print(Appender::Level level, const __FlashStringHelper *msg, ...) {
+  //void Logger::print(Appender::Level level, const __FlashStringHelper *msg, ...) {
 
     // TODO add PROGMEN implementation
-  }
+  //}
 
   Appender Logger::getDefaultSerialAppender() {
     return SerialAppender(&Serial, true);
