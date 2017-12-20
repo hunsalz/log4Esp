@@ -56,7 +56,7 @@ namespace log4arduino {
 
     if (getFormatter()) {
       bool filter = false;
-      for (auto && fn : _filterFunctions) {
+      for (auto && fn : getFilter()) {
         filter = fn(level, msg, args);
         if (filter) break;
       }
