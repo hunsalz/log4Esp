@@ -74,9 +74,9 @@ void callMyLoggerWithLevelFilter() {
 
 void callAppenderWithMyFormatter() {
    
-  Serial.println("+----------------------------+");
-  Serial.println("| Appender with own Formatter|");
-  Serial.println("+----------------------------+");
+  Serial.println("+-----------------------------+");
+  Serial.println("| Appender with own Formatter |");
+  Serial.println("+-----------------------------+");
 
   Logger logger = Logger("MyLogger");
   // use one of two possible methods to add an Level filter
