@@ -28,11 +28,7 @@ namespace log4arduino {
 
       typedef std::function<bool(Level level, const char* msg, va_list *args)> FilterFunction;
 
-      // TODO disable Appender instances
-
-      Print& getOutput();
-
-      void setOutput(Print* output);
+      virtual Print& getOutput() = 0;
 
       Appender::FormatterFunction getFormatter();
 
@@ -52,8 +48,6 @@ namespace log4arduino {
 
     private:
 
-      Print* _output = NULL;
-      
       FormatterFunction _formatterFunction = NULL;
 
       std::vector<FilterFunction> _filterFunctions;

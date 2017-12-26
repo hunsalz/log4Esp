@@ -11,15 +11,17 @@ namespace log4arduino {
 
     public:
 
-      RollingFileAppender(const char* path, bool addDefaultFormatter = true);
+      RollingFileAppender(const char* fileName, bool addDefaultFormatter = true);
 
-      const char* getPath();
+      Print& getOutput();
+
+      const char* getFileName();
 
       File getFile();
 
     private:
 
-      const char* _path = NULL;
+      const char* _fileName = NULL;
       File _file;
   };
 }

@@ -9,7 +9,9 @@ namespace log4arduino {
 
     public:
 
-      SerialAppender(Print* output, bool addDefaultFormatter = true);
+      SerialAppender(bool addDefaultFormatter = true);
+
+      Print& getOutput();
   };
 }
 

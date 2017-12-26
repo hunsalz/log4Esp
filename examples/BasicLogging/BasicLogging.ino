@@ -42,7 +42,7 @@ void callMyLoggerWithFilter() {
   Logger logger = Logger("MyLogger");
   // use one of two possible methods to add an Filter
   // logger.addFilterToAll(...); // adding Filter to all Appenders
-  logger.getAppender().at(0).addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool { // adding filter to only one specific appender
+  logger.getAppender().at(0)->addFilter([](Appender::Level level, const char* msg, va_list *args) -> bool { // adding filter to only one specific appender
     
     if (strstr(msg, "float")) {
       Serial.printf("Suppress messages containing 'float'");
@@ -103,7 +103,7 @@ void callMultipleAppender() {
   Serial.println("+--------------------+");
 
   Logger logger = Logger("MyLogger");
-  logger.getAppender().push_back(SerialAppender(&Serial));
+  logger.getAppender().push_back(new SerialAppender());
 
   testPrintf(logger);
 }

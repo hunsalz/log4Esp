@@ -52,9 +52,9 @@ namespace log4arduino {
         print(Appender::TRACE, msg, args...);
       }
 
-      String getName();
+      const char* getName();
 
-      std::vector<Appender>& getAppender();
+      std::vector<Appender*>& getAppender();
 
       void addFormatterToAll(Appender::FormatterFunction formatterFunction);
 
@@ -69,18 +69,16 @@ namespace log4arduino {
         va_start(args, msg);
         String str = String(msg); // use String constructor to handle PROGMEN and other character representations
         for (auto && fn : _appender) {
-          fn.print(level, str.c_str(), &args);
+          fn->print(level, str.c_str(), &args);
         }
         va_end(args);
       }
-
-      static Appender getDefaultSerialAppender();
 
     private:
 
       const char* _name;
 
-      std::vector<Appender> _appender;
+      std::vector<Appender*> _appender;
   };
 
   extern Logger LOG;

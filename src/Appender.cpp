@@ -16,14 +16,6 @@ namespace log4arduino {
     LEVEL_FATAL
   };
 
-  Print& Appender::getOutput() {
-    return *_output;
-  }
-
-  void Appender::setOutput(Print* output) {
-    _output = output;
-  }
-
   Appender::FormatterFunction Appender::getFormatter() {
     return _formatterFunction;
   }

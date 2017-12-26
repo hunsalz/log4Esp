@@ -6,56 +6,37 @@ namespace log4arduino {
     
     _name = name;
     if (addDefaultSerialAppender) {
-      _appender.push_back(getDefaultSerialAppender());
+      getAppender().push_back(new SerialAppender(true));
     }
   }
 
-  String Logger::getName() {
+  const char* Logger::getName() {
     return _name;
   }
 
-  std::vector<Appender>& Logger::getAppender() {
+  std::vector<Appender*>& Logger::getAppender() {
     return _appender;
   }
 
   void Logger::addFormatterToAll(Appender::FormatterFunction formatterFunction) {
 
-    for (auto && fn : _appender) {
-      fn.setFormatter(formatterFunction);
+    for (auto && fn : getAppender()) {
+      fn->setFormatter(formatterFunction);
     }
   }
 
   void Logger::addFilterToAll(Appender::FilterFunction filterFunction) {
 
-    for (auto && fn : _appender) {
-      fn.addFilter(filterFunction);
+    for (auto && fn : getAppender()) {
+      fn->addFilter(filterFunction);
     }
   }
 
   void Logger::addLevelToAll(Appender::Level level) {
 
-    for (auto && fn : _appender) {
-      fn.setLevel(level);
+    for (auto && fn : getAppender()) {
+      fn->setLevel(level);
     }
-  }
-
-  // void Logger::print(Appender::Level level, const char* msg, ...) {
-    
-  //   va_list args;
-  //   va_start(args, msg);
-  //   for (auto && fn : _appender) {
-  //     fn.print(level, msg, &args);
-  //   }
-  //   va_end(args);
-  // }
-
-  //void Logger::print(Appender::Level level, const __FlashStringHelper *msg, ...) {
-
-    // TODO add PROGMEN implementation
-  //}
-
-  Appender Logger::getDefaultSerialAppender() {
-    return SerialAppender(&Serial, true);
   }
 
   extern Logger LOG = Logger();
