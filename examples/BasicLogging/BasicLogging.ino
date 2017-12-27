@@ -142,6 +142,7 @@ void testPrintf(Logger logger) {
   logger.verbose(F("PROGMEM"));
   logger.verbose("%%");
   logger.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__);
+  // logger.verbose("NULL = %s", NULL); // TODO / IDEA: make Logger null pointer safe via argument list check
 }
 
 void setup() {
