@@ -3,9 +3,7 @@
 
 #include <FS.h> // https://github.com/esp8266/Arduino/tree/master/cores/esp8266/FS.h
 
-using log4arduino::Logger;
 using log4arduino::LOG;
-using log4arduino::Appender;
 using log4arduino::RollingFileAppender;
 
 const char* FILENAME = "/test.log";
