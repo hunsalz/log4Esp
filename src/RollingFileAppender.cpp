@@ -2,6 +2,8 @@
 
 namespace log4arduino {
 
+  // TODO add rolling file functionality
+
   RollingFileAppender::RollingFileAppender(const char* fileName, bool addDefaultFormatter) {
     
     _fileName = fileName;
@@ -23,32 +25,15 @@ namespace log4arduino {
 
   File RollingFileAppender::getFile() {
 
-    _file = SPIFFS.open(getFileName(), "a+");
-
-    // if (!_file && getFileName()) {
-    //   // open existing file and set file preferences
-    //   if (SPIFFS.exists(getFileName())) {
-    //     _file = SPIFFS.open(getFileName(), "a+");
-    //     if (_file) {
-    //       Log.verbose(F("Open file [%s] successful." CR), getFileName().c_str());
-    //       _offset = readOffset();
-    //       _lineLength = readLineLength();
-    //     } else {
-    //       Log.error(F("Open file [%s] failed." CR), getFileName().c_str());
-    //     }
-    //   // create a new file and set default file preferences
-    //   } else {
-    //     _file = SPIFFS.open(getFileName(), "w+");
-    //     if (_file) {
-    //       Log.error(F("Creating new file [%s] successful." CR), getFileName().c_str());
-    //       writeOffset(DEFAULT_OFFSET);
-    //       _lineLength = 0; // unset by default
-    //     } else {
-    //       Log.error(F("Creating new file [%s] failed." CR), getFileName().c_str());
-    //     }
-    //   }
-    // }
-
+    if (!_file && getFileName()) {
+      // open existing file and set file preferences
+      if (SPIFFS.exists(getFileName())) {
+        _file = SPIFFS.open(getFileName(), "a+");
+      // create a new file and set default file preferences
+      } else {
+        _file = SPIFFS.open(getFileName(), "w+"); 
+      }
+    }
     return _file;
   }
 }

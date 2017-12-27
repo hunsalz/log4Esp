@@ -35,50 +35,11 @@ void setup() {
   delay(300);
   Serial.println();
 
-  SPIFFS.begin();
+  SPIFFS.begin(); // don't forget to start SPIFFS first
 
-  // File file = SPIFFS.open(FILENAME, "w+");
-  // file.println("SPIFFS TEST 1");
-  // file.println("SPIFFS TEST 2");
-  // file.println("SPIFFS TEST 3");
-  // file.flush();
-  // file.close();
+  LOG.getAppender().push_back(new RollingFileAppender(FILENAME));
 
-  Logger logger = Logger("MyLogger");
-
-  //File file = getFile();
-  //file.println("TEST OPEN FILE with getFile()");
-
-  RollingFileAppender* appender = new RollingFileAppender(FILENAME, false);
-  appender->setFormatter([&](Print& output, Appender::Level level, const char* msg, va_list *args) { // adding formatter to all Appenders
-
-    // File file = SPIFFS.open(FILENAME, "a+");
-    // file.print(F("[FILE]["));
-    // file.print(Appender::toString(level, false));
-    // file.print(F("] "));
-    // size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-    // char buffer[length];
-    // vsnprintf(buffer, length, msg, *args);
-    // file.print(buffer);
-    // file.println();
-    // file.flush();
-    // file.close();
-
-    Serial.println("Saving output to file");
-
-    output.print(F("[FILE]["));
-    output.print(Appender::toString(level, false));
-    output.print(F("] "));
-    size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
-    char buffer[length];
-    vsnprintf(buffer, length, msg, *args);
-    output.print(buffer);
-    output.println();
-
-  });
-  logger.getAppender().push_back(appender);
-
-  logger.verbose(">>>>>>>>>>>>>>>>>Write this text to [%s]", FILENAME);
+  LOG.verbose("Write this text to [%s]", FILENAME); // now, this message is logged to serial and to file
 
   outputLogFile();
 }
