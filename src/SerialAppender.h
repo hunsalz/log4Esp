@@ -12,6 +12,12 @@ namespace log4arduino {
       SerialAppender(bool addDefaultFormatter = true);
 
       Print& getOutput();
+
+    protected:
+
+      void begin(Level level, const char* msg, va_list *args);
+
+      void end(Level level, const char* msg, va_list *args);
   };
 }
 
