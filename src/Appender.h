@@ -46,6 +46,12 @@ namespace log4arduino {
 
       static const __FlashStringHelper* toString(Level level, bool shortName = true);
 
+    protected:
+
+      virtual void begin(Level level, const char* msg, va_list *args) = 0;
+
+      virtual void end(Level level, const char* msg, va_list *args) = 0;
+
     private:
 
       FormatterFunction _formatterFunction = NULL;

@@ -53,7 +53,9 @@ namespace log4arduino {
         if (filter) break;
       }
       if (!filter) {
+        begin(level, msg, args);
         _formatterFunction(getOutput(), level, msg, args);
+        end(level, msg, args);
       }
     }
   }
@@ -69,7 +71,6 @@ namespace log4arduino {
       char buffer[length];
       vsnprintf(buffer, length, msg, *args);
       output.print(buffer);
-      output.println();
     };
   }
 
