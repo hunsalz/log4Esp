@@ -83,14 +83,14 @@ void callAppenderWithMyFormatter() {
   // logger.getAppender().at(0).setFomatter(...); // adding Formatter to only one specific Appender
   logger.addFormatterToAll([](Print& output, Appender::Level level, const char* msg, va_list *args) { // adding formatter to all Appenders
 
-    output.print(F("[ARDUINO]["));
-    output.print(Appender::toString(level, false));
+    output.print(F("[MyLogger]["));
+    output.print(F("["));
+    output.print(Appender::toString(level, true));
     output.print(F("] "));
     size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
     char buffer[length];
     vsnprintf(buffer, length, msg, *args);
     output.print(buffer);
-    output.println();
   });
 
   testPrintf(logger);
@@ -149,7 +149,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.setDebugOutput(false);
-  while(!Serial && !Serial.available()) {}
+  while (!Serial && !Serial.available()) {}
   delay(300);
   Serial.println();
 
