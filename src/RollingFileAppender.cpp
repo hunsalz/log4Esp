@@ -37,35 +37,26 @@ namespace log4arduino {
 
   void RollingFileAppender::end(Level level, const char* msg, va_list *args) {
 
-    int diff = getFile().position() - _lastOffset;
-
-    // define spacing = maxRowLength - written characters between last and current offset
-    int spacing = getMaxRowLength() - (getFile().position() - _lastOffset);
+    // spacing = maxRowLength - written characters between last and current offset - CR
+    int spacing = getMaxRowLength() - (getFile().position() - _lastOffset) - 1;
     // if spacing is greater zero then fill up the line with spaces
     if (spacing > 0) {
-      Serial.printf("TAB %d + %d = 32\n", spacing, diff);
-
       getOutput().printf("%*s", spacing, "");
     }
     // if spacing is less zero then turn around cursor to maxRowLength
     if (spacing < 0) {
-      Serial.printf("REDUCE %d + %d = 32\n", spacing, diff);
-      
       // grap 4 charactors extra to add [..] at the end
       getFile().seek((spacing - 4), SeekCur);
       getOutput().print(F("[..]"));
-    }
-  
+    } 
     // finalize log row automatically with CR
     getOutput().println();
-
     // save current cursor position
     uint16_t offset = getFile().position();
     // check if rollover is imminent
     if (offset >= (32 * 10)) {
+      // move cursor to first log row position
       offset = OFFSET_LENGTH + 1;
-
-      Serial.println("ROLLOVER");
     }
     // persist new offset position in file
     writeOffset(offset);
@@ -82,7 +73,7 @@ namespace log4arduino {
       String line = file.readStringUntil('\n');
       offset = line.toInt();
       if (offset == 0) {
-        //LOG.error(F("File [%s] doesn't contain a valid offset value."), getPath().c_str());
+        LOG.error(F("Log file [%s] doesn't contain a valid offset value."), getFileName());
       }
     }
 
@@ -103,15 +94,16 @@ namespace log4arduino {
 
   uint16_t RollingFileAppender::readMaxRowLength() {
 
-    uint16_t maxLength = 0;
+    uint16_t maxRowLength = 0;
     File file = getFile();
     if (file) {
-      file.seek(OFFSET_LENGTH, SeekSet);
-      String line = file.readStringUntil('\n');
-      maxLength = line.length();
+      // move cursor to first log row position
+      file.seek(OFFSET_LENGTH + 1, SeekSet);
+      // read first line and take value as maxRowLength
+      maxRowLength = file.readStringUntil('\n').length();
     }
 
-    return maxLength;
+    return maxRowLength;
   }
 
   File RollingFileAppender::getFile() {
@@ -121,21 +113,21 @@ namespace log4arduino {
       if (SPIFFS.exists(getFileName())) {
         _file = SPIFFS.open(getFileName(), "r+");
         if (_file) {
-          //LOG.verbose(F("Open file [%s] successful."), getFileName().c_str());
+          LOG.trace(F("Open log file [%s] successful."), getFileName());
           _file.seek(readOffset(), SeekSet);
           _maxRowLength = readMaxRowLength();
         } else {
-          //LOG.error(F("Open file [%s] failed."), getFileName().c_str());
+          LOG.error(F("Open log file [%s] failed."), getFileName());
         }
       // create a new file and set default file preferences
       } else {
         _file = SPIFFS.open(getFileName(), "w+");
         if (_file) {
-          //LOG.error(F("Creating new file [%s] successful."), getFileName().c_str());
+          LOG.trace(F("Creating new log file [%s] was successful."), getFileName());
           writeOffset(OFFSET_LENGTH);
           _file.println(); // move cursor to first log row position
         } else {
-          //LOG.error(F("Creating new file [%s] failed."), getFileName().c_str());
+          LOG.error(F("Creating new log file [%s] failed."), getFileName());
         }
       }
     }
