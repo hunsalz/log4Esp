@@ -15,8 +15,9 @@
   "script": [
     "sudo cp -r arduino-1.6.13 /usr/local/share/arduino",
     "sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino",
-    "sudo ln -s $PWD /usr/local/share/arduino/libraries/ArduinoLog", 
-    "arduino --verify --board arduino:avr:uno $PWD/examples/Log/Log.ino",
+    "sudo ln -s $PWD /usr/local/share/arduino/libraries/log4arduino", 
+    "arduino --verify --board arduino:avr:uno $PWD/examples/BasicLogging/BasicLogging.ino",
+    "arduino --verify --board arduino:avr:uno $PWD/examples/FileLogging/FileLogging.ino",
     
     "sudo rm -rf /usr/local/share/arduino",
     "sudo cp -r arduino-1.8.1 /usr/local/share/arduino",
