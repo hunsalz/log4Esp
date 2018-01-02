@@ -54,7 +54,7 @@ namespace log4arduino {
     // save current cursor position
     uint16_t offset = getFile().position();
     // check if rollover is imminent
-    if (offset >= (32 * 10)) {
+    if (offset >= (getMaxRowLength() * getMaxRows())) {
       // move cursor to first log row position
       offset = OFFSET_LENGTH + 1;
     }
