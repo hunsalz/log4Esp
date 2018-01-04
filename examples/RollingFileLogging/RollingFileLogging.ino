@@ -1,5 +1,4 @@
-#include <Logger.h>
-#include <RollingFileAppender.h>
+#include <Log4Esp.h>
 
 #include <FS.h> // https://github.com/esp8266/Arduino/tree/master/cores/esp8266/FS.h
 

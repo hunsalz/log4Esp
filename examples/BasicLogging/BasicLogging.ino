@@ -1,5 +1,4 @@
-#include <Logger.h>
-#include <SerialAppender.h>
+#include <Log4Esp.h>
 
 using log4arduino::Logger;
 using log4arduino::LOG;
