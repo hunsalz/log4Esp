@@ -1,7 +1,7 @@
 {
-  "name":"log4arduino",
-  "description":"Logging library for Arduino-compatible embedded systems",
-  "keywords":"Arduino,ESP8266,logging,Arduino-library,logging-library",
+  "name":"log4Esp",
+  "description":"Logging library for ESP8266",
+  "keywords":"ESP8266,ESP8266-library,logging,logging-library",
   "authors":
   {
     "name": "Markus Hunsalz",
@@ -10,11 +10,11 @@
   "repository":
   {
     "type": "git",
-    "url": "https://github.com/hunsalz/log4arduino.git"
+    "url": "https://github.com/hunsalz/log4Esp.git"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT License",
-  "frameworks": "arduino",
+  "frameworks": "ESP8266",
   "platforms":"espressif",
   "examples": [
     "examples/*/*.ino"

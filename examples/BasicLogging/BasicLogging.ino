@@ -1,9 +1,9 @@
 #include <Log4Esp.h>
 
-using log4arduino::Logger;
-using log4arduino::LOG;
-using log4arduino::Appender;
-using log4arduino::SerialAppender;
+using log4Esp::Logger;
+using log4Esp::LOG;
+using log4Esp::Appender;
+using log4Esp::SerialAppender;
 
 void callDefaultLogger() {
   

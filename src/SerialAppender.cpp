@@ -1,6 +1,6 @@
 #include "SerialAppender.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   SerialAppender::SerialAppender(bool addDefaultFormatter) {
     

@@ -1,6 +1,6 @@
 #include "Appender.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   const char LEVEL_FATAL[] PROGMEM = "FATAL";
   const char LEVEL_ERROR[] PROGMEM = "ERROR";

@@ -3,7 +3,7 @@
 
 #include "Appender.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   class SerialAppender: public Appender {
 

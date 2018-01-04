@@ -2,7 +2,7 @@
 #define LOGGER_H
 
 #ifdef Arduino_h
-// arduino is not compatible with std::vector
+// Arduino is not compatible with std::vector
 #undef min
 #undef max
 #endif
@@ -14,7 +14,7 @@
 #include "Appender.h"
 #include "SerialAppender.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   class Logger {
 

@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   Logger::Logger(const char* name, bool addDefaultSerialAppender) {
     

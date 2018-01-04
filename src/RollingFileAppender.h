@@ -6,9 +6,9 @@
 #include "Appender.h"
 #include "Logger.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
-  using log4arduino::LOG;
+  using log4Esp::LOG;
 
   class RollingFileAppender: public Appender {
 

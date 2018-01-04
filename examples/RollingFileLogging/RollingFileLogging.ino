@@ -2,8 +2,8 @@
 
 #include <FS.h> // https://github.com/esp8266/Arduino/tree/master/cores/esp8266/FS.h
 
-using log4arduino::Logger;
-using log4arduino::RollingFileAppender;
+using log4Esp::Logger;
+using log4Esp::RollingFileAppender;
 
 const char* FILENAME = "/poem.log";
 Logger _logger;

@@ -1,6 +1,6 @@
 #include "RollingFileAppender.h"
 
-namespace log4arduino {
+namespace log4Esp {
 
   RollingFileAppender::RollingFileAppender(const char* fileName, uint16_t maxRowLength, uint16_t maxRows, bool addDefaultFormatter) {
     
