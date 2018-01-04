@@ -19,7 +19,7 @@
   "script": [
     "echo $PWD",
     "echo $HOME",
-    "ls $PWD",
+    "ls -l $PWD",
     "source $TRAVIS_BUILD_DIR/travis/common.sh"
   ],
   "after_success": [
