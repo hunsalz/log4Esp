@@ -3,22 +3,22 @@
 
 #include "Appender.h"
 
-namespace log4Esp {
+namespace log4Esp
+{
 
-  class SerialAppender: public Appender {
+class SerialAppender : public Appender
+{
 
-    public:
+public:
+  SerialAppender(bool addDefaultFormatter = true);
 
-      SerialAppender(bool addDefaultFormatter = true);
+  Print &getOutput();
 
-      Print& getOutput();
+protected:
+  void begin(Level level, const char *msg, va_list *args);
 
-    protected:
-
-      void begin(Level level, const char* msg, va_list *args);
-
-      void end(Level level, const char* msg, va_list *args);
-  };
+  void end(Level level, const char *msg, va_list *args);
+};
 }
 
 #endif // SERIAL_APPENDER_H
