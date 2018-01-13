@@ -6,32 +6,31 @@
 #include "Appender.h"
 #include "Logger.h"
 
-namespace log4Esp
-{
+namespace log4Esp {
 
 using log4Esp::LOG;
 
-class RollingFileAppender : public Appender
-{
+class RollingFileAppender : public Appender {
 
 public:
-  RollingFileAppender(const char *fileName, uint16_t maxRowLength = 128, uint16_t maxRows = 512, bool addDefaultFormatter = true);
+  RollingFileAppender(const char *fileName, uint16_t maxRowLength = 128, uint16_t maxRows = 512,
+                      bool addDefaultFormatter = true);
 
   Print &getOutput();
 
   /*
-       Return file name.
-       */
+   Return file name.
+  */
   const char *getFileName();
 
   /*
-       Return max row length.
-       */
+   Return max row length.
+  */
   uint16_t getMaxRowLength();
 
   /*
-       Return max number of rows before logging starts from beginning again.
-       */
+   Return max number of rows before logging starts from beginning again.
+  */
   uint16_t getMaxRows();
 
 protected:
@@ -49,25 +48,25 @@ private:
   const static int OFFSET_LENGTH = 11; // 10 digits to keep an full integer value and 1 digit for CR
 
   /*
-       Return offset from an existing log file.
-       */
+   Return offset from an existing log file.
+  */
   uint16_t readOffset();
 
   /*
-       Write offset to log file.
-       */
+   Write offset to log file.
+  */
   void writeOffset(uint16_t offset);
 
   /*
-       Return max row length from an existing log file.
-       */
+   Return max row length from an existing log file.
+  */
   uint16_t readMaxRowLength();
 
   /*
-       Return file instance.
-       */
+   Return file instance.
+  */
   File getFile();
 };
-}
+} // namespace log4Esp
 
 #endif // ROLLING_FILE_APPENDER_H

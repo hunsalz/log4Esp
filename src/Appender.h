@@ -10,80 +10,71 @@
 
 #include <Arduino.h>
 
-namespace log4Esp
-{
+namespace log4Esp {
 
-class Appender
-{
+class Appender {
 
 public:
-  enum Level
-  {
-    FATAL = 0,
-    ERROR = 1,
-    WARNING = 2,
-    VERBOSE = 3,
-    TRACE = 4
-  };
+  enum Level { FATAL = 0, ERROR = 1, WARNING = 2, VERBOSE = 3, TRACE = 4 };
 
   typedef std::function<void(Print &output, Level level, const char *msg, va_list *args)> FormatterFunction;
 
   typedef std::function<bool(Level level, const char *msg, va_list *args)> FilterFunction;
 
   /*
-       Return output reference.
-       */
+   Return output reference.
+  */
   virtual Print &getOutput() = 0;
 
   /*
-       Return associated Formatter.
-       */
+   Return associated Formatter.
+  */
   Appender::FormatterFunction getFormatter();
 
   /*
-       Set Formatter.
-       */
+   Set Formatter.
+  */
   void setFormatter(FormatterFunction formatterFunction);
 
   /*
-       Return all associated Filter.
-       */
+   Return all associated Filter.
+  */
   std::vector<Appender::FilterFunction> &getFilter();
 
   /*
-       Add a Filter.
-       */
+   Add a Filter.
+  */
   void addFilter(FilterFunction filterFunction);
 
   /*
-       Set a certain logging Level.
-       */
+   Set a certain logging Level.
+  */
   void setLevel(Level level);
 
   /*
-       Print log entry.
-       */
+   Print log entry.
+  */
   void print(Level level, const char *msg, va_list *args);
 
   /*
-       Return a default Formatter instance.
-       */
+   Return a default Formatter instance.
+  */
   static Appender::FormatterFunction getDefaultFormatter();
 
   /*
-       Output Level.
-       */
+   Output Level.
+  */
   static const __FlashStringHelper *toString(Level level, bool shortName = true);
 
 protected:
   /*
-       Hook before print log entry is executed.
-       */
+   Hook before print log entry is executed.
+  */
   virtual void begin(Level level, const char *msg, va_list *args) = 0;
 
   /*
-       Hook after print log entry is executed.
-       */
+   Hook after print log entry is executed.
+  */
   virtual void end(Level level, const char *msg, va_list *args) = 0;
 
 private:
@@ -91,6 +82,6 @@ private:
 
   std::vector<FilterFunction> _filterFunctions;
 };
-}
+} // namespace log4Esp
 
 #endif // APPENDER_H

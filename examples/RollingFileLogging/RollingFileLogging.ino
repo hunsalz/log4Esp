@@ -8,8 +8,7 @@ using log4Esp::RollingFileAppender;
 const char *FILENAME = "/poem.log";
 Logger _logger;
 
-void writeLogFile()
-{
+void writeLogFile() {
   // write the first two verse of a poem from Johann Wolfgang von Goethe to file
   _logger.verbose("Der Zauberlehrling");
   _logger.verbose("");
@@ -34,16 +33,13 @@ void writeLogFile()
   _logger.verbose("Johann Wolfgang von Goethe");
 }
 
-void readLogFile()
-{
+void readLogFile() {
   Serial.printf("\nOutput log file: %s\n\n", FILENAME);
 
-  if (SPIFFS.exists(FILENAME))
-  {
+  if (SPIFFS.exists(FILENAME)) {
     File file = SPIFFS.open(FILENAME, "r");
     String line;
-    while (file.available())
-    {
+    while (file.available()) {
       line = file.readStringUntil('\n');
       Serial.println(line);
     }
@@ -51,13 +47,11 @@ void readLogFile()
   }
 }
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(false);
-  while (!Serial && !Serial.available())
-  {
-  }
+  while (!Serial && !Serial.available()) {
+  };
   delay(300);
   Serial.println();
 
@@ -69,8 +63,7 @@ void setup()
   readLogFile();
 }
 
-void loop()
-{
+void loop() {
   // time for RTOS functions
   delay(200);
 }
