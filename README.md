@@ -11,6 +11,7 @@
 * Support of [printf](http://www.cplusplus.com/reference/cstdio/printf/) standards
 * Support of formatted strings in flash memory / [PROGMEM on ESP8266](http://arduino-esp8266.readthedocs.io/en/latest/PROGMEM.html)
 * Support of multiple different log destination appenders
+* Support of filter options for log events
 * Easily to extend with your own logging routines
 
 ## Examples
@@ -65,4 +66,4 @@ Feel encouraged to give feedback or send pull requests on Github.
 
 # License
 
-log4Esp is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT). For the full copyright and license information, please see the [LICENSE](LICENSE) file that was distributed with this source code.
+log4Esp is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT). For the full copyright and license information, please see the [LICENSE](LICENSE) file that was distributed with this source code.
