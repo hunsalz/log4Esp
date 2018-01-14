@@ -49,7 +49,7 @@
     LOG.verbose("char = [%c]", c);                          // [V] char = [a]
     LOG.verbose(F("PROGMEM"));                              // [V] PROGMEM
     LOG.verbose("%%");                                      // [V] %
-    LOG.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__); // [V] testPrintf(../arduino/libraries/log4Esp/examples/BasicLogging/BasicLogging.ino:137)
+    LOG.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__); // [V] foo(..<path>/foo.ino:123)
 ```
 # Disclaimer
 
