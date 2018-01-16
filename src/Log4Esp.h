@@ -5,9 +5,9 @@
 #error “This library only supports boards with ESP8266 MCU.”
 #endif
 
-#include "Appender.h"
+#include "appender/Appender.h"
+#include "appender/RollingFileAppender.h"
+#include "appender/SerialAppender.h"
 #include "Logger.h"
-#include "RollingFileAppender.h"
-#include "SerialAppender.h"
 
 #endif // LOG4ESP_H

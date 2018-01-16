@@ -11,8 +11,8 @@
 #include <inttypes.h>
 #include <stdarg.h>
 
-#include "Appender.h"
-#include "SerialAppender.h"
+#include "appender/Appender.h"
+#include "appender/SerialAppender.h"
 
 namespace log4Esp {
 
