@@ -1,4 +1,4 @@
-# log4Esp - Logging library for ESP8266
+# log4Esp - Extendable logging library for ESP8266
 
 [![Build Status](https://travis-ci.org/hunsalz/log4Esp.svg?branch=master)](https://travis-ci.org/hunsalz/log4Esp)
 [![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
@@ -12,7 +12,8 @@
 * Support of formatted strings in flash memory / [PROGMEM on ESP8266](http://arduino-esp8266.readthedocs.io/en/latest/PROGMEM.html)
 * Support of multiple different log destination appenders
 * Support of filter options for log events
-* Easily to extend with your own logging routines
+* Support of adjustable output formats
+* Easily extend to your own logging routines
 
 ## Examples
 
