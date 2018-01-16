@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hunsalz/log4Esp.svg?branch=master)](https://travis-ci.org/hunsalz/log4Esp)
 [![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
+[![Documentation Status](https://readthedocs.org/projects/log4esp/badge/?version=latest)](http://log4esp.readthedocs.io/en/latest/?badge=latest)
 
  log4Esp is a light-wight logging library for ESP8266. As the name suggest it’s inspired by other [Apache logging services](https://logging.apache.org/).
 
