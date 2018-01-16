@@ -6,8 +6,8 @@
 
 using namespace log4Esp;
 
-const char *WIFI_SSID = "visitors";        //  Your WiFi network SSID (name)
-const char *WIFI_PSK = "kA!3MD.kE-92BVtx"; // Your WiFi network PSK (password)
+const char *WIFI_SSID = "xxx";        //  Your WiFi network SSID (name)
+const char *WIFI_PSK = "xxx"; // Your WiFi network PSK (password)
 
 // NTP Servers:
 static const char ntpServerName[] = "de.pool.ntp.org";
