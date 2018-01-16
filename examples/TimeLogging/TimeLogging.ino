@@ -6,20 +6,14 @@
 
 using namespace log4Esp;
 
-const char *WIFI_SSID = "xxx"; //  Your WiFi network SSID (name)
-const char *WIFI_PSK = "xxx";  // Your WiFi network PSK (password)
+const char *WIFI_SSID = "Sputnik";      //  Your WiFi network SSID (name)
+const char *WIFI_PSK = "!--Sputnik--!"; // Your WiFi network PSK (password)
+
+// const char *WIFI_SSID = "visitors"; //  Your WiFi network SSID (name)
+// const char *WIFI_PSK = "kA!3MD.kE-92BVtx";  // Your WiFi network PSK (password)
 
 static const char ntpServerName[] = "europe.pool.ntp.org";
-// static const char ntpServerName[] = "time.nist.gov";
-// static const char ntpServerName[] = "time-a.timefreq.bldrdoc.gov";
-// static const char ntpServerName[] = "time-b.timefreq.bldrdoc.gov";
-// static const char ntpServerName[] = "time-c.timefreq.bldrdoc.gov";
-
 const int timeZone = 1; // Central European Time
-// const int timeZone = -5;  // Eastern Standard Time (USA)
-// const int timeZone = -4;  // Eastern Daylight Time (USA)
-// const int timeZone = -8;  // Pacific Standard Time (USA)
-// const int timeZone = -7;  // Pacific Daylight Time (USA)
 
 WiFiUDP Udp;
 
