@@ -7,7 +7,10 @@
 Class Documentation
 ===================
 
-.. doxygenclass:: log4Esp
+.. doxygenclass:: Logger
+   :project: log4Esp
+   :members:
+.. doxygenclass:: Appender
    :project: log4Esp
    :members:
 
