@@ -50,9 +50,8 @@ Appender::FormatterFunction Appender::getDefaultFormatter() {
 
   return [](Print &output, Appender::Level level, const char *msg, va_list *args) {
 
-    output.print(F("["));
     output.print(Appender::toString(level, true));
-    output.print(F("] "));
+    output.print(DEFAULT_SEPARATOR);
     size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
     char buffer[length];
     vsnprintf(buffer, length, msg, *args);

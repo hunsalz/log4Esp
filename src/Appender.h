@@ -15,6 +15,8 @@ namespace log4Esp {
 class Appender {
 
 public:
+  static const char DEFAULT_SEPARATOR = '|';
+
   enum Level { FATAL = 0, ERROR = 1, WARNING = 2, VERBOSE = 3, TRACE = 4 };
 
   typedef std::function<void(Print &output, Level level, const char *msg, va_list *args)> FormatterFunction;
