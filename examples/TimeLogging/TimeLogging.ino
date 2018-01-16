@@ -6,11 +6,10 @@
 
 using namespace log4Esp;
 
-const char *WIFI_SSID = "xxx";        //  Your WiFi network SSID (name)
-const char *WIFI_PSK = "xxx"; // Your WiFi network PSK (password)
+const char *WIFI_SSID = "xxx"; //  Your WiFi network SSID (name)
+const char *WIFI_PSK = "xxx";  // Your WiFi network PSK (password)
 
-// NTP Servers:
-static const char ntpServerName[] = "de.pool.ntp.org";
+static const char ntpServerName[] = "europe.pool.ntp.org";
 // static const char ntpServerName[] = "time.nist.gov";
 // static const char ntpServerName[] = "time-a.timefreq.bldrdoc.gov";
 // static const char ntpServerName[] = "time-b.timefreq.bldrdoc.gov";
@@ -29,8 +28,7 @@ void setup() {
   // setup Serial output
   Serial.begin(115200);
   Serial.setDebugOutput(false);
-  while (!Serial && !Serial.available())
-    ;
+  while (!Serial && !Serial.available());
   delay(300);
   Serial.println();
 
@@ -81,23 +79,33 @@ void setup() {
   // setup a formatter that output current timestamp
   LOG.addFormatterToAll([](Print &output, Appender::Level level, const char *msg, va_list *args) {
 
+    // output log level
     output.print(Appender::toString(level, true));
     output.print(Appender::DEFAULT_SEPARATOR);
+    // output UNIX timestamp
     if (timeStatus() != timeNotSet) {
       output.printf("%d", now());
-      output.print(Appender::DEFAULT_SEPARATOR);
-      output.printf("%d-%02d-%02dT%02d:%02d:%02d", year(), month(), day(), hour(), minute(), second());
-      output.print(Appender::DEFAULT_SEPARATOR);
     } else {
-      // TODO
+      output.printf("%010d", 0);
     }
+    output.print(Appender::DEFAULT_SEPARATOR);
+    // output date time
+    if (timeStatus() != timeNotSet) {
+      output.printf("%d-%02d-%02dT%02d:%02d:%02d", year(), month(), day(), hour(), minute(), second());
+    } else {
+      output.printf("%d-%02d-%02dT%02d:%02d:%02d", 1970, 1, 1, 0, 0, 0);
+    }
+    output.print(Appender::DEFAULT_SEPARATOR);
+    // output uptime of this program in milliseconds
     output.print(millis());
     output.print(Appender::DEFAULT_SEPARATOR);
+    // output free heap space
     output.print(ESP.getFreeHeap());
     output.print(Appender::DEFAULT_SEPARATOR);
-
+    // determine buffer length for formatted data
     size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
     char buffer[length];
+    // output formatted data
     vsnprintf(buffer, length, msg, *args);
     output.print(buffer);
   });
@@ -108,13 +116,7 @@ void loop() {
   float value = random(10, 100) / 100.0;
   LOG.verbose(F("Sensor value %.2f"), value);
 
-  // TODO explain [hostByName] request IP for: de.pool.ntp.org => panic
-
-  // IPAddress ntpServerIP;
-  // WiFi.hostByName(ntpServerName, ntpServerIP);
-  // LOG.verbose(F("hostByName"), ntpServerName, ntpServerIP.toString().c_str());
-
-  delay(1000);
+  delay(2000);
 }
 
 const int NTP_PACKET_SIZE = 48;     // NTP time is in the first 48 bytes of message
@@ -123,8 +125,7 @@ byte packetBuffer[NTP_PACKET_SIZE]; // buffer to hold incoming & outgoing packet
 time_t getNtpTime() {
   IPAddress ntpServerIP; // NTP server's ip address
 
-  while (Udp.parsePacket() > 0)
-    ; // discard any previously received packets
+  while (Udp.parsePacket() > 0); // discard any previously received packets
 
   // get a random server from the pool
   WiFi.hostByName(ntpServerName, ntpServerIP);
