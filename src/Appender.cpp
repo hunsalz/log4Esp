@@ -50,10 +50,13 @@ Appender::FormatterFunction Appender::getDefaultFormatter() {
 
   return [](Print &output, Appender::Level level, const char *msg, va_list *args) {
 
+    // output log level
     output.print(Appender::toString(level, true));
     output.print(DEFAULT_SEPARATOR);
+    // determine buffer length for formatted data
     size_t length = vsnprintf(NULL, 0, msg, *args) + 1;
     char buffer[length];
+    // output formatted data
     vsnprintf(buffer, length, msg, *args);
     output.print(buffer);
   };
