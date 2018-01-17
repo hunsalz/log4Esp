@@ -2,14 +2,6 @@
 
 namespace log4Esp {
 
-const char LEVEL_FATAL[] PROGMEM = "FATAL";
-const char LEVEL_ERROR[] PROGMEM = "ERROR";
-const char LEVEL_WARNING[] PROGMEM = "WARNING";
-const char LEVEL_VERBOSE[] PROGMEM = "VERBOSE";
-const char LEVEL_NOTICE[] PROGMEM = "TRACE";
-
-const char *const LOG_LEVEL_STRINGS[] PROGMEM = {LEVEL_VERBOSE, LEVEL_NOTICE, LEVEL_WARNING, LEVEL_ERROR, LEVEL_FATAL};
-
 Appender::FormatterFunction Appender::getFormatter() { return _formatterFunction; }
 
 void Appender::setFormatter(FormatterFunction formatterFunction) { _formatterFunction = formatterFunction; }
