@@ -4,12 +4,9 @@
    :end-before: ----
 Class Documentation
 ===================
-.. doxygenclass:: Logger
+.. doxygennamespace:: log4Esp
    :project: log4Esp
-   :members:
-.. doxygenclass:: Appender
-   :project: log4Esp
-   :members:
 ----
 This documentation was built using ArduinoDocs_.
 .. _ArduinoDocs: http://arduinodocs.readthedocs.org
+
