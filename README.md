@@ -61,10 +61,6 @@
 - [BasicDemo](https://github.com/hunsalz/log4Esp/tree/master/examples/BasicDemo) - shows the basic usage
 - [RollingFileDemo](https://github.com/hunsalz/log4Esp/tree/master/examples/RollingFileDemo) - explains usage of a RollingFileAppender
 
-# Disclaimer
-
-log4Esp is designed for the ESP8266 device only. Other [MCU](https://en.wikipedia.org/wiki/Microcontroller) like Arduino, etc. are not supported.
-
 # Dependencies
 
 This library depends solely on [ESP8266 core for Arduino](https://github.com/esp8266/Arduino.git)
@@ -76,3 +72,7 @@ Feel encouraged to give feedback or send pull requests on Github.
 # License
 
 log4Esp is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT). For the full copyright and license information, please see the [LICENSE](LICENSE) file that was distributed with this source code.
+
+# Disclaimer
+
+log4Esp is designed for the ESP8266 device only. Other [MCU](https://en.wikipedia.org/wiki/Microcontroller) like Arduino, etc. are not supported.
