@@ -16,7 +16,7 @@
 * Support of adjustable output formats
 * Easily extend to your own logging routines
 
-## Examples
+## Quick start
 
 ```c++
     Serial.begin(115200);
@@ -54,6 +54,13 @@
     LOG.verbose("%%");                                      // [V] %
     LOG.verbose("%s(%s:%d)", __func__, __FILE__, __LINE__); // [V] foo(..<path>/foo.ino:123)
 ```
+
+# Samples
+
+- [AdvancedDemo](https://github.com/hunsalz/log4Esp/tree/master/examples/AdvancedDemo) - extends Formatter with Unix timestamp, time date & free RAM information
+- [BasicDemo](https://github.com/hunsalz/log4Esp/tree/master/examples/BasicDemo) - shows the basic usage
+- [RollingFileDemo](https://github.com/hunsalz/log4Esp/tree/master/examples/RollingFileDemo) - explains usage of a RollingFileAppender
+
 # Disclaimer
 
 log4Esp is designed for the ESP8266 device only. Other [MCU](https://en.wikipedia.org/wiki/Microcontroller) like Arduino, etc. are not supported.
