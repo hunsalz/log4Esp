@@ -18,62 +18,82 @@ namespace log4Esp {
 
 class Logger {
 
+  /**
+   * Logger represents the central interface to all log operations.
+   */
 public:
+  /**
+   * \param name labels internal Logger name
+   * \param addDefaultSerialAppender adds a SerialAppender optional
+   */
   Logger(const char *name = "default", bool addDefaultSerialAppender = true);
 
-  /*
-   Print a log entry in [fatal] mode to all associated Appender.
-  */
+  /**
+   * Print a log entry in [fatal] mode to all associated Appenders.
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T, typename... Args> void fatal(T msg, Args... args) { print(Appender::FATAL, msg, args...); }
 
-  /*
-   Print a log entry in [error] mode to all associated Appender.
-  */
+  /**
+   * Print a log entry in [error] mode to all associated Appenders.
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T, typename... Args> void error(T msg, Args... args) { print(Appender::ERROR, msg, args...); }
 
-  /*
-   Print a log entry in [warning] mode to all associated Appender.
-  */
+  /**
+   * Print a log entry in [warning] mode to all associated Appenders.
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T, typename... Args> void warning(T msg, Args... args) { print(Appender::WARNING, msg, args...); }
 
-  /*
-   Print a log entry in [verbose] mode to all associated Appender.
-  */
+  /**
+   * Print a log entry in [verbose] mode to all associated Appenders.
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T, typename... Args> void verbose(T msg, Args... args) { print(Appender::VERBOSE, msg, args...); }
 
-  /*
-   Print a log entry in [trace] mode to all associated Appender.
-  */
+  /**
+   * Print a log entry in [trace] mode to all associated Appenders.
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T, typename... Args> void trace(T msg, Args... args) { print(Appender::TRACE, msg, args...); }
 
-  /*
-   Return internal logger name.
-  */
+  /**
+   * \return internal Logger name
+   */
   const char *getName();
 
-  /*
-   Return list of Appender.
-  */
+  /**
+   * \return list of associated Appenders
+   */
   std::vector<Appender *> &getAppender();
 
-  /*
-   Add same Formatter to all associated Appender.
-  */
+  /**
+   * \param add same FormatterFunction to all associated Appenders
+   */
   void addFormatterToAll(Appender::FormatterFunction formatterFunction);
 
-  /*
-   Add same Filter to all associated Appender.
-  */
+  /**
+   * \param add same Filter to all associated Appenders
+   */
   void addFilterToAll(Appender::FilterFunction filterFunction);
 
-  /*
-   Add same logging Level to all associated Appender.
-  */
+  /**
+   * \param add same Level to all associated Appenders
+   */
   void addLevelToAll(Appender::Level level);
 
-  /*
-   Print log entry to all associated Appender.
-  */
+  /**
+   * Print a log entry to all associated Appenders.
+   * \param level represents logging level of entry
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   template <class T> void print(Appender::Level level, T msg, ...) {
 
     va_list args;
