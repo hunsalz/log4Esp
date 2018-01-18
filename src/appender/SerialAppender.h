@@ -5,6 +5,9 @@
 
 namespace log4Esp {
 
+/**
+ * SerialAppender logs data to Serial.
+ */
 class SerialAppender : public Appender {
 
 public:

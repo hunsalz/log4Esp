@@ -12,6 +12,9 @@
 
 namespace log4Esp {
 
+/**
+ * Appenders represent a logging destination.
+ */
 class Appender {
 
 public:
@@ -23,60 +26,69 @@ public:
 
   typedef std::function<bool(Level level, const char *msg, va_list *args)> FilterFunction;
 
-  /*
-   Return output reference.
-  */
+  /**
+   * \return output reference
+   */
   virtual Print &getOutput() = 0;
 
-  /*
-   Return associated Formatter.
-  */
+  /**
+   * \return associated Formatter
+   */
   Appender::FormatterFunction getFormatter();
 
-  /*
-   Set Formatter.
-  */
+  /**
+   * \param set Formatter
+   */
   void setFormatter(FormatterFunction formatterFunction);
 
-  /*
-   Return all associated Filter.
-  */
+  /**
+   * \return all associated Filters
+   */
   std::vector<Appender::FilterFunction> &getFilter();
 
-  /*
-   Add a Filter.
-  */
+  /**
+   * \param add a Filter
+   */
   void addFilter(FilterFunction filterFunction);
 
-  /*
-   Set a certain logging Level.
-  */
+  /**
+   * \param set a certain logging Level
+   */
   void setLevel(Level level);
 
-  /*
-   Print log entry.
-  */
+  /**
+   * Print a log entry.
+   * \param level represents logging level of entry
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   void print(Level level, const char *msg, va_list *args);
 
-  /*
-   Return a default Formatter instance.
-  */
+  /**
+   * \return default Formatter instance
+   */
   static Appender::FormatterFunction getDefaultFormatter();
 
-  /*
-   Output Level.
-  */
+  /**
+   * \return Level as String representation
+   */
   static const __FlashStringHelper *toString(Level level, bool shortName = true);
 
 protected:
-  /*
-   Hook before print log entry is executed.
-  */
+  /**
+   * A hook before print log entry is executed.
+   * \param level represents logging level of entry
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   virtual void begin(Level level, const char *msg, va_list *args) = 0;
 
-  /*
-   Hook after print log entry is executed.
-  */
+  /**
+   * A hook after print log entry is executed.
+   * \param level represents logging level of entry
+   * \param msg log entry with optional format instructions and placeholders
+   * \param args arguments replacing placeholders
+   */
   virtual void end(Level level, const char *msg, va_list *args) = 0;
 
 private:

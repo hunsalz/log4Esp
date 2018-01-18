@@ -10,6 +10,9 @@ namespace log4Esp {
 
 using log4Esp::LOG;
 
+/**
+ * RollingFileAppender logs data to a rolling file.
+ */
 class RollingFileAppender : public Appender {
 
 public:
@@ -18,19 +21,19 @@ public:
 
   Print &getOutput();
 
-  /*
-   Return file name.
-  */
+  /**
+   * \return file name
+   */
   const char *getFileName();
 
-  /*
-   Return max row length.
-  */
+  /**
+   * \return max row length
+   */
   uint16_t getMaxRowLength();
 
-  /*
-   Return max number of rows before logging starts from beginning again.
-  */
+  /**
+   * \return max number of rows before logging starts from beginning again
+   */
   uint16_t getMaxRows();
 
 protected:
@@ -47,24 +50,24 @@ private:
 
   const static int OFFSET_LENGTH = 11; // 10 digits to keep an full integer value and 1 digit for CR
 
-  /*
-   Return offset from an existing log file.
-  */
+  /**
+   * \return offset of an existing log file
+   */
   uint16_t readOffset();
 
-  /*
-   Write offset to log file.
-  */
+  /**
+   * \param write offset into an existing log file
+   */
   void writeOffset(uint16_t offset);
 
-  /*
-   Return max row length from an existing log file.
-  */
+  /**
+   * \return max row length of an existing log file
+   */
   uint16_t readMaxRowLength();
 
-  /*
-   Return file instance.
-  */
+  /**
+   * \return file instance
+   */
   File getFile();
 };
 } // namespace log4Esp
