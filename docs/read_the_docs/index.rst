@@ -6,6 +6,9 @@ Class Documentation
 ===================
 .. doxygennamespace:: log4Esp
    :project: log4Esp
+.. doxygenclass:: log4Esp::Logger
+   :project: log4Esp
+   :members:
 ----
 This documentation was built using ArduinoDocs_.
 .. _ArduinoDocs: http://arduinodocs.readthedocs.org
