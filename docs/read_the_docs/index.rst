@@ -2,10 +2,12 @@
    :maxdepth: 2
 .. include:: ../../README.rst
    :end-before: ----
-Class Documentation
+Namespace
 ===================
 .. doxygennamespace:: log4Esp
    :project: log4Esp
+Classes
+===================
 .. doxygenclass:: log4Esp::Logger
    :project: log4Esp
    :members:
