@@ -112,4 +112,8 @@ private:
 };
 } // namespace log4Esp
 
+#if !defined(NO_GLOBAL_INSTANCES)
+extern log4Esp::Logger LOG;
+#endif // NO_GLOBAL_INSTANCES
+
 #endif // LOGGER_H

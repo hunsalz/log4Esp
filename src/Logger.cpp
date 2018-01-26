@@ -31,3 +31,7 @@ void Logger::addLevelToAll(Appender::Level level) {
   }
 }
 } // namespace log4Esp
+
+#if !defined(NO_GLOBAL_INSTANCES)
+log4Esp::Logger LOG = log4Esp::Logger();
+#endif // NO_GLOBAL_INSTANCES
