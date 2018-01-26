@@ -4,10 +4,8 @@
 #include <TimeLib.h>
 #include <WiFiUdp.h>
 
-using namespace log4Esp;
-
-const char *WIFI_SSID = "xxx"; //  Your WiFi network SSID (name)
-const char *WIFI_PSK = "xxx";  // Your WiFi network PSK (password)
+// const char *WIFI_SSID = "xxx"; //  Your WiFi network SSID (name)
+// const char *WIFI_PSK = "xxx";  // Your WiFi network PSK (password)
 
 static const char ntpServerName[] = "europe.pool.ntp.org";
 const int timeZone = 1; // Central European Time
@@ -56,7 +54,7 @@ void setup() {
     Serial.println();
   }
   if (retries <= 0) {
-    LOG.error(F("Coudn't establish any WiFi connection."));
+    LOG.error(F("Couldn't establish any WiFi connection."));
   }
 
   // setup UDP

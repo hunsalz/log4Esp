@@ -2,8 +2,6 @@
 
 #include <FS.h> // https://github.com/esp8266/Arduino/tree/master/cores/esp8266/FS.h
 
-using namespace log4Esp;
-
 const char *FILENAME = "/poem.log";
 Logger _logger;
 

@@ -110,8 +110,6 @@ private:
 
   std::vector<Appender *> _appender;
 };
-
-extern Logger LOG;
 } // namespace log4Esp
 
 #endif // LOGGER_H

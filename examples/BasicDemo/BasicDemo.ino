@@ -1,7 +1,5 @@
 #include <Log4Esp.h>
 
-using namespace log4Esp;
-
 void callDefaultLogger() {
   Serial.println("+----------------+");
   Serial.println("| Default Logger |");

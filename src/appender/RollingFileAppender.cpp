@@ -65,7 +65,7 @@ uint16_t RollingFileAppender::readOffset() {
     String line = file.readStringUntil('\n');
     offset = line.toInt();
     if (offset == 0) {
-      LOG.error(F("Log file [%s] doesn't contain a valid offset value."), getFileName());
+      _log.error(F("Log file [%s] doesn't contain a valid offset value."), getFileName());
     }
   }
 
@@ -105,21 +105,21 @@ File RollingFileAppender::getFile() {
     if (SPIFFS.exists(getFileName())) {
       _file = SPIFFS.open(getFileName(), "r+");
       if (_file) {
-        LOG.trace(F("Open log file [%s] successful."), getFileName());
+        _log.trace(F("Open log file [%s] successful."), getFileName());
         _file.seek(readOffset(), SeekSet);
         _maxRowLength = readMaxRowLength();
       } else {
-        LOG.error(F("Open log file [%s] failed."), getFileName());
+        _log.error(F("Open log file [%s] failed."), getFileName());
       }
       // create a new file and set default file preferences
     } else {
       _file = SPIFFS.open(getFileName(), "w+");
       if (_file) {
-        LOG.trace(F("Creating new log file [%s] was successful."), getFileName());
+        _log.trace(F("Creating new log file [%s] was successful."), getFileName());
         writeOffset(OFFSET_LENGTH);
         _file.println(); // move cursor to first log row position
       } else {
-        LOG.error(F("Creating new log file [%s] failed."), getFileName());
+        _log.error(F("Creating new log file [%s] failed."), getFileName());
       }
     }
   }

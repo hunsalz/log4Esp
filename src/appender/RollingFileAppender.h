@@ -8,8 +8,6 @@
 
 namespace log4Esp {
 
-using log4Esp::LOG;
-
 /**
  * RollingFileAppender logs data to a rolling file.
  */
@@ -47,6 +45,7 @@ private:
   uint16_t _lastOffset;
   uint16_t _maxRowLength;
   uint16_t _maxRows;
+  Logger _log = Logger();
 
   const static int OFFSET_LENGTH = 11; // 10 digits to keep an full integer value and 1 digit for CR
 

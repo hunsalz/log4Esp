@@ -30,6 +30,4 @@ void Logger::addLevelToAll(Appender::Level level) {
     fn->setLevel(level);
   }
 }
-
-extern Logger LOG = Logger();
 } // namespace log4Esp
