@@ -11,6 +11,12 @@ RollingFileAppender::RollingFileAppender(const char *fileName, uint16_t maxRowLe
   if (addDefaultFormatter) {
     setFormatter(Appender::getDefaultFormatter());
   }
+  // load SPIFFS by default
+  if (SPIFFS.begin()) {
+    _log.verbose(F("File system mounted."));
+  } else {
+    _log.warning(F("Mounting file system failed."));
+  }
 }
 
 Print &RollingFileAppender::getOutput() { return _file; }
