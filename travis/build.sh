@@ -4,7 +4,6 @@ function build_sketches() {
     
     local arduino=$1
     local srcpath=$2
-    local platform=$3
     local sketches=$(find $srcpath -name *.ino)
     for sketch in $sketches; do
         local sketchdir=$(dirname $sketch)
