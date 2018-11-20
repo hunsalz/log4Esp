@@ -12,10 +12,10 @@
     "type": "git",
     "url": "https://github.com/hunsalz/log4Esp.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT License",
-  "frameworks": "ESP8266",
-  "platforms":"espressif",
+  "frameworks": "arduino",
+  "platforms": "espressif8266",
   "examples": [
     "examples/*/*.ino"
   ]
