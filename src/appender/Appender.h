@@ -7,6 +7,7 @@
 #undef max
 #endif
 #include <vector>
+#include <functional>
 
 #include <Arduino.h>
 
