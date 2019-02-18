@@ -83,7 +83,7 @@ void RollingFileAppender::writeOffset(uint16_t offset) {
   File file = getFile();
   if (file) {
     file.seek(0, SeekSet);
-    char digits[10]; // max offset value consists of 10 digits
+    char digits[11]; // max offset value consists of 10 digits
     sprintf(digits, "%-10d", offset);
     file.print(digits);
     file.flush();

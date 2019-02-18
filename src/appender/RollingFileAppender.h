@@ -1,7 +1,11 @@
 #ifndef ROLLING_FILE_APPENDER_H
 #define ROLLING_FILE_APPENDER_H
 
-#include <FS.h> // https://github.com/esp8266/Arduino/tree/master/cores/esp8266/FS.h
+#if defined(ESP32)
+#include <SPIFFS.h>
+#else
+#include <FS.h>
+#endif
 
 #include "Appender.h"
 #include "Logger.h"
